@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 
+
 namespace ChromeDinoGame.Entities.Obstacles
 {
     public abstract class Obstacle

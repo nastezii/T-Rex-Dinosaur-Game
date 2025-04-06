@@ -13,7 +13,7 @@ namespace ChromeDinoGame.Entities.Obstacles
 
             Sprite = new Image
             {
-                Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/cactus{num}.png"))
+                Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/cactus_{num}.png"))
             };
         }
     }

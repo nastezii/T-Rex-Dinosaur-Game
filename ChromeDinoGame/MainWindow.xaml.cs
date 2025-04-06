@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 
-
 namespace ChromeDinoGame
 {
     public partial class MainWindow : Window
@@ -8,7 +7,7 @@ namespace ChromeDinoGame
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
     }
 }

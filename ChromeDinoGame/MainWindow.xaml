@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChromeDinoGame"
         mc:Ignorable="d"
-        Title="Dino Game" Height="350" Width="600">
+        Height="360" Width="610" Background ="Black">
 
     <Grid>
-        <Canvas Name="GameCanvas" HorizontalAlignment="Center" Height="335" VerticalAlignment="Center" Width="600"/>
+        <Canvas Name="GameCanvas" HorizontalAlignment="Center" Height="335" VerticalAlignment="Center" Width="600" Background ="White"/>
     </Grid>
 </Window>

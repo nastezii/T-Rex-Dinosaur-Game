@@ -7,7 +7,6 @@ namespace ChromeDinoGame
         public MainWindow()
         {
             InitializeComponent();
-
         }
     }
 }

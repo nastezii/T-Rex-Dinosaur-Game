@@ -5,16 +5,19 @@ namespace ChromeDinoGame.Entities.Obstacles
 {
     class Cactus : Obstacle
     {
-        private static Random _random = new Random();
-
-        public Cactus(double x, double y) : base(x, y)
+        public Cactus(Random random, double canvasWidth, double canvasHeight, double lineOfGround)
         {
-            int num = _random.Next(1, 7);
+            BitmapImage bitmapImage = new BitmapImage(new Uri($"pack://application:,,,/Resources/cactus_{random.Next(1, 7)}.png"));
 
             Sprite = new Image
             {
-                Source = new BitmapImage(new Uri($"pack://application:,,,/Resources/cactus_{num}.png"))
+                Source = bitmapImage,
             };
+
+            Width = bitmapImage.Width;
+            Height = bitmapImage.Height;
+            PosX = canvasWidth - Width;
+            PosY = canvasHeight - lineOfGround - Height;
         }
     }
 }

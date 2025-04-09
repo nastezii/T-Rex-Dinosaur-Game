@@ -13,6 +13,8 @@ namespace ChromeDinoGame.Entities
 
         public Dino(double lineOfGround)
         {
+            SetSpriteCharacteristics( _startImagePath, false);
+
             PosY = lineOfGround;
             PosX = 50;
         }

@@ -7,12 +7,7 @@ namespace ChromeDinoGame.Entities
     {
         public Cloud(double x, double y, Random random)
         {
-            BitmapImage bitmapImage = new BitmapImage(new Uri($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png"));
-
-            Sprite = new Image
-            {
-                Source = bitmapImage,
-            };
+            SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png", false);
 
             PosX = x;
             PosY = y;

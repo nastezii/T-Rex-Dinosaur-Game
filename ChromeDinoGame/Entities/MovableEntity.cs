@@ -1,5 +1,4 @@
 ﻿
-
 using ChromeDinoGame.Interfaces;
 
 namespace ChromeDinoGame.Entities

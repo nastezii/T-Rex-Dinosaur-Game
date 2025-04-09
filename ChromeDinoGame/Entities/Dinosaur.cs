@@ -1,7 +1,4 @@
-﻿using System.Windows.Controls;
-using WpfAnimatedGif;
-using System.Windows.Media.Imaging;
-
+﻿
 namespace ChromeDinoGame.Entities
 {
     class Dino : GameEntity

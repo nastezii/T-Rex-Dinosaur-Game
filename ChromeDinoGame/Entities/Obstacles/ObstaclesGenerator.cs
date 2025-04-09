@@ -15,7 +15,7 @@ namespace ChromeDinoGame.Entities.Obstacles
             _lineOfGround = lineOfGround;
         }
 
-        public Obstacle GenerateObstacle()
+        public MovableEntity GenerateObstacle()
         {
             if (_random.Next(0, 2) == 1)
                 return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround);

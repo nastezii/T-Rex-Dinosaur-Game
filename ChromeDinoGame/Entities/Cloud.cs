@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
+﻿
 namespace ChromeDinoGame.Entities
 {
     class Cloud : MovableEntity

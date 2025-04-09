@@ -13,10 +13,15 @@ namespace ChromeDinoGame.Entities
 
         public Dino(double lineOfGround)
         {
-            SetSpriteCharacteristics( _startImagePath, false);
+            SetRunningSprite();
 
             PosY = lineOfGround;
             PosX = 50;
         }
+
+        public void SetRunningSprite() => SetSpriteCharacteristics(_rinningGifPath, true);
+        public void SetCrouchSprite() => SetSpriteCharacteristics(_crouchingGifPath, true);
+        public void SetStartSprite() => SetSpriteCharacteristics(_startImagePath, false);
+        public void SetEndSprite() => SetSpriteCharacteristics(_endImagePath, false);
     }
 }

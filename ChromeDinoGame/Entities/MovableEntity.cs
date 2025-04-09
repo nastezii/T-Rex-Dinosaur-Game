@@ -6,7 +6,7 @@ namespace ChromeDinoGame.Entities
 {
     public abstract class MovableEntity : GameEntity, IMovable, IWindowAware
     {
-        public double Speed { get; set; }
+        public double Speed { get; protected set; }
 
         public bool IsInWindow() => PosX + Sprite.ActualWidth < 0;
        

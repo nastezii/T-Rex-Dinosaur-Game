@@ -1,20 +1,19 @@
-﻿
+﻿using ChromeDinoGame.Entities;
 using System.Windows.Controls;
-using ChromeDinoGame.Entities;
 
 namespace ChromeDinoGame.Services
 {
     class ObjectHandler
     {
         private Canvas _canvas;
-        private List<GameEntity> _objects;
+        private List<Entity> _objects;
         public ObjectHandler(Canvas canvas)
         {
             _canvas = canvas;
-            _objects = new List<GameEntity>();  
+            _objects = new List<Entity>();  
         }
 
-        public void AddObject(GameEntity entity) => _objects.Add(entity);
+        public void AddObject(Entity entity) => _objects.Add(entity);
 
     }
 }

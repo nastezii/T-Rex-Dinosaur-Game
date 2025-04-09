@@ -1,7 +1,7 @@
 ﻿
 namespace ChromeDinoGame.Entities
 {
-    class Road : MovableEntity
+    class Road : Entity
     {
         public Road(double x, double y, Random random)
         {

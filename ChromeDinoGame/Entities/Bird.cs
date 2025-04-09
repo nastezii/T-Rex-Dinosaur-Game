@@ -1,10 +1,7 @@
-﻿using System.Windows.Controls;
-using WpfAnimatedGif;
-using System.Windows.Media.Imaging;
-
-namespace ChromeDinoGame.Entities.Obstacles
+﻿
+namespace ChromeDinoGame.Entities
 {
-    class Bird : MovableEntity
+    class Bird : Entity
     {
         public Bird(Random random, double canvasWidth, double canvasHeight)
         {

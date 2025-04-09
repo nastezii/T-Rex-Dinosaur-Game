@@ -1,7 +1,7 @@
 ﻿
 namespace ChromeDinoGame.Entities
 {
-    class Cloud : MovableEntity
+    class Cloud : Entity
     {
         public Cloud(double x, double y, Random random)
         {

@@ -1,5 +1,6 @@
-﻿
-namespace ChromeDinoGame.Entities.Obstacles
+﻿using ChromeDinoGame.Entities;
+
+namespace ChromeDinoGame.Services
 {
     class ObstaclesGenerator
     {
@@ -15,7 +16,7 @@ namespace ChromeDinoGame.Entities.Obstacles
             _lineOfGround = lineOfGround;
         }
 
-        public MovableEntity GenerateObstacle()
+        public Entity GenerateObstacle()
         {
             if (_random.Next(0, 2) == 1)
                 return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround);

@@ -1,9 +1,7 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-
-namespace ChromeDinoGame.Entities.Obstacles
+﻿
+namespace ChromeDinoGame.Entities
 {
-    class Cactus : MovableEntity
+    class Cactus : Entity
     {
         public Cactus(Random random, double canvasWidth, double canvasHeight, double lineOfGround)
         {

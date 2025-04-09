@@ -4,13 +4,18 @@ using System.Windows.Media.Imaging;
 
 namespace ChromeDinoGame.Entities
 {
-    public abstract class GameEntity
+    public abstract class Entity
     {
         public Image Sprite { get; protected set; }
         public double Width { get; protected set; }
         public double Height { get; protected set; }
         public double PosX { get; protected set; }
         public double PosY { get; protected set; }
+        public double Speed { get; set; }
+
+        public bool IsInWindow() => PosX + Sprite.ActualWidth < 0;
+
+        public virtual void MoveObject() => PosX -= Speed;
 
         protected void SetSpriteCharacteristics(string path, bool isGif)
         {

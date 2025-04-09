@@ -1,7 +1,7 @@
 ﻿
 namespace ChromeDinoGame.Entities
 {
-    class Dino : GameEntity
+    class Dino : Entity
     {
         private const string _rinningGifPath = "pack://application:,,,/Resources/dino_run.gif";
         private const string _crouchingGifPath = "pack://application:,,,/Resources/dino_crouch.gif";
@@ -15,6 +15,8 @@ namespace ChromeDinoGame.Entities
             PosY = lineOfGround;
             PosX = 50;
         }
+
+        public override void MoveObject() => PosY += Speed;
 
         public void SetRunningSprite() => SetSpriteCharacteristics(_rinningGifPath, true);
         public void SetCrouchSprite() => SetSpriteCharacteristics(_crouchingGifPath, true);

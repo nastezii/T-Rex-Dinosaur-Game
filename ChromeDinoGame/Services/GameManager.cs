@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Threading;
-using ChromeDinoGame.Entities.Obstacles;
 
 namespace ChromeDinoGame.Services
 {

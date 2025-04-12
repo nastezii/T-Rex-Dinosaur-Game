@@ -9,9 +9,10 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Dino _dino;
         private List<Entity> _objects;
-        public ObjectHandler(Canvas canvas)
+        public ObjectHandler(Canvas canvas, Dino dino)
         {
             _canvas = canvas;
+            _dino = dino;
             _objects = new List<Entity>();  
         }
 

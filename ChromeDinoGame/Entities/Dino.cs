@@ -12,7 +12,7 @@ namespace ChromeDinoGame.Entities
         private double _gravity = 0.05;
         
 
-        public Dino(double lineOfGround, double canvasWidth)
+        public Dino(double lineOfGround, double canvasWidth, double speed)
         {
             SetRunningSprite();
 
@@ -20,6 +20,7 @@ namespace ChromeDinoGame.Entities
 
             PosY = _minDinoYValue;
             PosX = 50;
+            Speed = speed;
         }
 
         public void Jump()

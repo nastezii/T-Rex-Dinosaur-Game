@@ -12,6 +12,7 @@ namespace ChromeDinoGame.Entities
         public double PosX { get; protected set; }
         public double PosY { get; protected set; }
         public double Speed { get; set; }
+        public bool isObstacle { get; protected set; }
 
         public bool IsInWindow() => PosX + Sprite.ActualWidth < 0;
 

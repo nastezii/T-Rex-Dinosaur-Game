@@ -9,6 +9,8 @@ namespace ChromeDinoGame.Entities
 
             PosX = canvasWidth - Width;
             PosY = canvasHeight - lineOfGround - Height;
+
+            isObstacle = true;
         }
     }
 }

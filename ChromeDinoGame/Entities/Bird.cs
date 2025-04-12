@@ -9,6 +9,8 @@ namespace ChromeDinoGame.Entities
 
             PosY = random.Next(150, 200);
             PosX = canvasWidth - Width;
+
+            isObstacle = true;
         }
     }
 }

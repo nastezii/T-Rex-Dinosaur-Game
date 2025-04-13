@@ -1,7 +1,7 @@
 ﻿
 namespace ChromeDinoGame.Entities
 {
-    class Bird : Entity
+    class Bird : Obstacle
     {
         public Bird(Random random, double canvasWidth, double canvasHeight, double speed)
         {
@@ -10,8 +10,6 @@ namespace ChromeDinoGame.Entities
             PosY = random.Next(150, 200);
             PosX = canvasWidth - Width;
             Speed = speed;
-
-            isObstacle = true;
         }
     }
 }

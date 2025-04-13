@@ -4,24 +4,27 @@ namespace ChromeDinoGame.Services
 {
     class ObstaclesGenerator
     {
-        private static Random _random = new Random();
+        private static Random _random;
         private readonly double _canvasWidth;
         private readonly double _canvasHeight;
         private readonly double _lineOfGround;
+        private double _speed;
 
-        public ObstaclesGenerator(double canvasWidth, double canvasHeight, double lineOfGround)
+        public ObstaclesGenerator(Random random, double speed, double canvasWidth, double canvasHeight, double lineOfGround)
         {
+            _random = random;
+            _speed = speed;
             _canvasHeight = canvasHeight;
             _canvasWidth = canvasWidth;
             _lineOfGround = lineOfGround;
         }
 
-        public Entity GenerateObstacle()
+        public Obstacle GenerateObstacle()
         {
             if (_random.Next(0, 2) == 1)
-                return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround);
+                return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround, _speed);
             else
-                return new Bird(_random, _canvasWidth, _canvasHeight);
+                return new Bird(_random, _canvasWidth, _canvasHeight, _speed);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ChromeDinoGame.Entities
         public double Speed { get; set; }
         public bool isObstacle { get; protected set; }
 
-        public bool IsInWindow() => PosX + Sprite.ActualWidth < 0;
+        public bool IsInWindow() => PosX + Sprite.ActualWidth > 0;
 
         public virtual void MoveObject() => PosX -= Speed;
 
@@ -32,7 +32,7 @@ namespace ChromeDinoGame.Entities
             }
             else
             {
-                var bitmapImage = new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
+                var bitmapImage = new BitmapImage(new Uri(path));
                 Sprite.Source = bitmapImage;
 
                 Width = bitmapImage.Width;

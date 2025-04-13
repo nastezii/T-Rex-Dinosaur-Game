@@ -3,7 +3,7 @@ namespace ChromeDinoGame.Entities
 {
     class Road : Entity
     {
-        public Road(Random random, double x, double y, double speed)
+        public Road(Random random, double speed, double x, double y = 305)
         {
             SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png", false);
 

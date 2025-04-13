@@ -1,7 +1,7 @@
 ﻿
 namespace ChromeDinoGame.Entities
 {
-    class Cactus : Entity
+    class Cactus : Obstacle
     {
         public Cactus(Random random, double canvasWidth, double canvasHeight, double lineOfGround, double speed)
         {
@@ -10,8 +10,6 @@ namespace ChromeDinoGame.Entities
             PosX = canvasWidth - Width;
             PosY = canvasHeight - lineOfGround - Height;
             Speed = speed;
-
-            isObstacle = true;
         }
     }
 }

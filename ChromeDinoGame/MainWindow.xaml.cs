@@ -1,4 +1,4 @@
-﻿
+﻿using ChromeDinoGame.Services;
 using System.Windows;
 
 namespace ChromeDinoGame
@@ -8,7 +8,8 @@ namespace ChromeDinoGame
         public MainWindow()
         {
             InitializeComponent();
-
+            GameManager gmm = new GameManager(GameCanvas);
+            gmm.StartGame();
         }
     }
 }

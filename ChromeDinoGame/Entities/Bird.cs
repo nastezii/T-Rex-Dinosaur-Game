@@ -3,7 +3,7 @@ namespace ChromeDinoGame.Entities
 {
     class Bird : Obstacle
     {
-        public Bird(Random random, double canvasWidth, double canvasHeight, double speed)
+        public Bird(Random random, double canvasWidth, double speed)
         {
             SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
 

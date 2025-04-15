@@ -24,7 +24,7 @@ namespace ChromeDinoGame.Services
             if (_random.Next(0, 2) == 1)
                 return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround, _speed);
             else
-                return new Bird(_random, _canvasWidth, _canvasHeight, _speed);
+                return new Bird(_random, _canvasWidth,  _speed);
         }
     }
 }

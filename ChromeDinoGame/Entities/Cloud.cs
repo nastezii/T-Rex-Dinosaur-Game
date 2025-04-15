@@ -3,9 +3,9 @@ namespace ChromeDinoGame.Entities
 {
     class Cloud : Entity
     {
-        public Cloud(Random random, double x, double y, double speed)
+        public Cloud(double x, double y, double speed)
         {
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png", false);
+            SetSpriteCharacteristics($"pack://application:,,,/Resources/cloud.png", false);
 
             PosX = x;
             PosY = y;

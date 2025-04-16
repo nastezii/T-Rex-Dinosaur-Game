@@ -4,15 +4,14 @@ namespace ChromeDinoGame.Services
 {
     class ObstaclesGenerator
     {
-        private static Random _random;
+        private static Random _random = new Random();
         private readonly double _canvasWidth;
         private readonly double _canvasHeight;
         private readonly double _lineOfGround;
         private double _speed;
 
-        public ObstaclesGenerator(Random random, double speed, double canvasWidth, double canvasHeight, double lineOfGround)
+        public ObstaclesGenerator(double speed, double canvasWidth, double canvasHeight, double lineOfGround)
         {
-            _random = random;
             _speed = speed;
             _canvasHeight = canvasHeight;
             _canvasWidth = canvasWidth;

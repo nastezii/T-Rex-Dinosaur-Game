@@ -26,7 +26,7 @@ namespace ChromeDinoGame.Services
         public void StartGame()
         {
             _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(15);
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(5);
             _objectHandler.InitializeStartWindow();
             _gameTimer.Tick += GameLoop;
             _gameTimer.Start();

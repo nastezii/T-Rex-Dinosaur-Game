@@ -8,7 +8,7 @@ namespace ChromeDinoGame.Entities
             SetSpriteCharacteristics($"pack://application:,,,/Resources/cactus_{random.Next(1, 7)}.png", false);
 
             PosX = canvasWidth - Width;
-            PosY = canvasHeight - lineOfGround - Height;
+            PosY = lineOfGround;
             Speed = speed;
         }
     }

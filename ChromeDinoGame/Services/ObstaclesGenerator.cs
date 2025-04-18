@@ -20,10 +20,10 @@ namespace ChromeDinoGame.Services
 
         public Obstacle GenerateObstacle()
         {
-            if (_random.Next(0, 2) == 1)
-                return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround, _speed);
+            if (_random.Next(0, 3) == 0)
+                return new Bird(_random, _canvasWidth, _speed);
             else
-                return new Bird(_random, _canvasWidth,  _speed);
+                return new Cactus(_random, _canvasWidth, _canvasHeight, _lineOfGround, _speed);
         }
     }
 }

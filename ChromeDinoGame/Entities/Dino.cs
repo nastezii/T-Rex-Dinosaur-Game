@@ -7,18 +7,20 @@ namespace ChromeDinoGame.Entities
         private const string _crouchingGifPath = "pack://application:,,,/Resources/dino_crouch.gif";
         private const string _startImagePath = "pack://application:,,,/Resources/dino_start.png";
         private const string _endImagePath = "pack://application:,,,/Resources/dino_dead.png";
-        public bool IsRunning { get; private set; } = false;
+        public bool IsRunning { get; private set; } = true;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
 
         private readonly double _lineOfGround;
-        private double _gravity = 0.05;
+        private double _initialJumpSpeed;
+        private double _gravity = 0.5;
 
         public Dino(double canvasWidth, double canvasHeight, double lineOfGround, double speed)
         {
-            SetStartSprite();
+            SetRunningSprite();
 
-            Speed = speed;
+            _lineOfGround = lineOfGround;
+            Speed = _initialJumpSpeed = speed * 2;
             PosY = lineOfGround;
             PosX = 50;
         }
@@ -27,9 +29,10 @@ namespace ChromeDinoGame.Entities
         {
             if (IsJumping)
             {
-                if (PosY >= _lineOfGround)
+                if (PosY + Speed <= _lineOfGround)
                 {
                     IsJumping = false;
+                    Speed = _initialJumpSpeed;
                     PosY = _lineOfGround;
                 }
                 else
@@ -56,16 +59,22 @@ namespace ChromeDinoGame.Entities
 
         public void Crouch()
         {
-            IsJumping = false;
-            IsRunning = false;
-            SetCrouchSprite();
+            if (!IsJumping)
+            {
+                IsRunning = false;
+                IsCrouching = true;
+                SetCrouchSprite();
+            }
         }
 
         public void Run()
         {
-            IsCrouching = false;
-            IsJumping = false;
-            SetRunningSprite();
+            if (!IsJumping)
+            {
+                IsCrouching = false;
+                IsRunning = true;
+                SetRunningSprite();
+            }
         }
 
         public void Dead()

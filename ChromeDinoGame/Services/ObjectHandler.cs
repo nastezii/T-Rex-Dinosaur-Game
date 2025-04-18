@@ -1,7 +1,6 @@
 ﻿using ChromeDinoGame.Entities;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace ChromeDinoGame.Services
 {
@@ -10,6 +9,7 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Random _random;
         private double _speedOfEntities;
+        private double _lineOfGround;
         private Dino _dino;
         private ObstaclesGenerator _obstaclesGenerator;
         private List<Road> _roads = new List<Road>();
@@ -20,6 +20,7 @@ namespace ChromeDinoGame.Services
         {
             _canvas = canvas;
             _random = random;
+            _lineOfGround = lineOfGround;
             _speedOfEntities = speedOfEntities;
             _dino = new Dino(canvas.Width, canvas.Height, lineOfGround, _speedOfEntities);
             _obstaclesGenerator = new ObstaclesGenerator(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
@@ -28,7 +29,7 @@ namespace ChromeDinoGame.Services
         {
             AddRoad(0);
             AddRoad();
-            AddCloud(_random.Next(300, 500));
+            AddCloud(_random.Next(200, 500));
         }
 
         public void UpdateEntitites()
@@ -36,18 +37,20 @@ namespace ChromeDinoGame.Services
             UpdateClouds();
             UpdateRoads();
             UpdateObstacles();
-            UpdateDino();
+
             if (!_canvas.Children.Contains(_dino.Sprite))
                 RenderEntity(_dino);
+
+            UpdateDino();
         }
 
         public bool CheckCollision()
         {
-            Rect dinoRect = new Rect(_dino.PosX, _dino.PosY, _dino.Width, _dino.Height);
+            Rect dinoRect = new Rect(_dino.PosX, _dino.PosY, _dino.Width - 20, _dino.Height - 10);
 
             foreach (Obstacle obstacle in _obstacles)
             {
-                if (obstacle.CheckCollision(dinoRect, obstacle))
+                if (obstacle.CheckCollision(dinoRect , obstacle))
                     return true;
             }
             return false;
@@ -85,8 +88,16 @@ namespace ChromeDinoGame.Services
 
         private void UpdateDino()
         {
-            if (_dino.IsRunning)
+            if (_dino.IsJumping)
+            {
                 _dino.MoveObject();
+                UpdatePosition(_dino);
+            }
+            if (!_dino.IsCrouching && !_dino.IsRunning && !_dino.IsJumping)
+            {
+                _canvas.Children.Remove(_dino.Sprite);
+                Run();
+            }
         }
 
         private void UpdateObstacles()
@@ -105,7 +116,7 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(150, 200))
+            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(100, 150))
             {
                 AddObstacle();
             }
@@ -154,14 +165,14 @@ namespace ChromeDinoGame.Services
         }
 
         private void AddObstacle() => _obstacles.Add(_obstaclesGenerator.GenerateObstacle());
-        private void AddRoad(double x = 600) => _roads.Add(new Road(_random, _speedOfEntities, x, 290));
-        private void AddCloud(double x = 600) => _clouds.Add(new Cloud(x, _random.Next(10, 100), _speedOfEntities / 10));
+        private void AddRoad(double x = 600) => _roads.Add(new Road(_random, _speedOfEntities, x, _lineOfGround));
+        private void AddCloud(double x = 600) => _clouds.Add(new Cloud(x, _random.Next(200, 300), _speedOfEntities / 10));
 
         private void RenderEntity(Entity entity)
         {
             _canvas.Children.Add(entity.Sprite);
             Canvas.SetLeft(entity.Sprite, entity.PosX);
-            Canvas.SetTop(entity.Sprite, entity.PosY);
+            Canvas.SetBottom(entity.Sprite, entity.PosY);
 
             if (entity is Dino)
                 Canvas.SetZIndex(entity.Sprite, 4);
@@ -178,7 +189,7 @@ namespace ChromeDinoGame.Services
             entity.MoveObject();
 
             if (entity is Dino)
-                Canvas.SetTop(entity.Sprite, entity.PosY);
+                Canvas.SetBottom(entity.Sprite, entity.PosY);
             else
                 Canvas.SetLeft(entity.Sprite, entity.PosX);
         }

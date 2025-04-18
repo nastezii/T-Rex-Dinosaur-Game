@@ -12,7 +12,7 @@ namespace ChromeDinoGame.Services
         private List<double> _highScores;
         private double _score = 0;
         private readonly double _lineOfGround = 15;
-        private double _SpeedOfEntities = 5;
+        private double _SpeedOfEntities = 8;
 
         public GameManager(Canvas canvas) 
         {
@@ -26,11 +26,15 @@ namespace ChromeDinoGame.Services
         public void StartGame()
         {
             _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(5);
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
             _objectHandler.InitializeStartWindow();
             _gameTimer.Tick += GameLoop;
             _gameTimer.Start();
         }
+
+        public void Jump() => _objectHandler.Jump();
+        public void Run() => _objectHandler.Run();
+        public void Crouch() => _objectHandler.Crouch();
 
         private void GameLoop(object sender, EventArgs e)
         {

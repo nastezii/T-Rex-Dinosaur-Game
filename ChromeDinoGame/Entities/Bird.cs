@@ -7,7 +7,7 @@ namespace ChromeDinoGame.Entities
         {
             SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
 
-            PosY = random.Next(150, 200);
+            PosY = random.Next(80, 100);
             PosX = canvasWidth - Width;
             Speed = speed;
         }

@@ -32,6 +32,8 @@ namespace ChromeDinoGame.Services
             AddCloud(_random.Next(200, 500));
         }
 
+        public void IncreaseSpeed(double speedIncrement) => _speedOfEntities += speedIncrement;
+
         public void UpdateEntitites()
         {
             UpdateClouds();
@@ -46,7 +48,7 @@ namespace ChromeDinoGame.Services
 
         public bool CheckCollision()
         {
-            Rect dinoRect = new Rect(_dino.PosX, _dino.PosY, _dino.Width - 20, _dino.Height - 10);
+            Rect dinoRect = new Rect(_dino.PosX, _dino.PosY, _dino.Width - 20, _dino.Height - 20);
 
             foreach (Obstacle obstacle in _obstacles)
             {
@@ -86,6 +88,13 @@ namespace ChromeDinoGame.Services
             }
         }
 
+        public void DinoDead()
+        { 
+            _canvas.Children.Remove( _dino.Sprite);
+            _dino.Dead();
+            RenderEntity(_dino);
+        }
+
         private void UpdateDino()
         {
             if (_dino.IsJumping)
@@ -116,7 +125,7 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(100, 150))
+            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(50, 75))
             {
                 AddObstacle();
             }
@@ -138,7 +147,7 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_clouds[_clouds.Count - 1].PosX < _random.Next(100, 350))
+            if (_clouds[_clouds.Count - 1].PosX < _random.Next(150, 350))
             {
                 AddCloud();
             }
@@ -165,8 +174,8 @@ namespace ChromeDinoGame.Services
         }
 
         private void AddObstacle() => _obstacles.Add(_obstaclesGenerator.GenerateObstacle());
-        private void AddRoad(double x = 600) => _roads.Add(new Road(_random, _speedOfEntities, x, _lineOfGround));
-        private void AddCloud(double x = 600) => _clouds.Add(new Cloud(x, _random.Next(200, 300), _speedOfEntities / 10));
+        private void AddRoad(double x = 650) => _roads.Add(new Road(_random, _speedOfEntities, x, _lineOfGround));
+        private void AddCloud(double x = 650) => _clouds.Add(new Cloud(x, _random.Next(200, 340), _speedOfEntities / 10));
 
         private void RenderEntity(Entity entity)
         {

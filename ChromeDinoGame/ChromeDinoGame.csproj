@@ -21,6 +21,9 @@
     <None Remove="Resources\dino_dead.png" />
     <None Remove="Resources\dino_run.gif" />
     <None Remove="Resources\dino_start.png" />
+    <None Remove="Resources\road_1.png" />
+    <None Remove="Resources\road_2.png" />
+    <None Remove="Resources\road_3.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +74,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\road_2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\road_3.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

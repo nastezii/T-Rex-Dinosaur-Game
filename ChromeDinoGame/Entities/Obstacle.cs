@@ -7,7 +7,7 @@ namespace ChromeDinoGame.Entities
     {
         public bool CheckCollision(Rect dinoRect, Obstacle obstacle)
         {
-            Rect obstRect = new Rect(obstacle.PosX, obstacle.PosY, obstacle.Width - 10, obstacle.Height - 10);
+            Rect obstRect = new Rect(obstacle.PosX, obstacle.PosY, obstacle.Width - 20, obstacle.Height - 20);
 
             if (dinoRect.IntersectsWith(obstRect))
             {

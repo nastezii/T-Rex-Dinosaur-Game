@@ -11,7 +11,7 @@ namespace ChromeDinoGame.Services
         private ObjectHandler _objectHandler;
         private List<double> _highScores;
         private double _score = 0;
-        private readonly double _lineOfGround = 15;
+        private readonly double _lineOfGround = 16;
         private double _SpeedOfEntities = 8;
 
         public GameManager(Canvas canvas) 
@@ -42,9 +42,11 @@ namespace ChromeDinoGame.Services
             {
                 _objectHandler.UpdateEntitites();
                 CalculateScore();
+                _objectHandler.IncreaseSpeed(0.00001);
             }
             else
             {
+                _objectHandler.DinoDead();
                 EndGame();
                 _highScores.Add(_score);
             }  
@@ -58,7 +60,6 @@ namespace ChromeDinoGame.Services
         { 
             PauseGame();
             _highScores.Add(_score);
-            _score = 0;
         }
     }
 }

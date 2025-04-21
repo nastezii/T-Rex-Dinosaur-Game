@@ -7,37 +7,43 @@ namespace ChromeDinoGame
     public partial class MainWindow : Window
     {
         private GameManager _gameManager;
-
+        private bool _isGameStarted = false;
         public MainWindow()
         {
             InitializeComponent();
 
-            _gameManager = new GameManager(GameCanvas);
-            _gameManager.StartGame();
-
             KeyUp += MainWindow_KeyUp;
             KeyDown += MainWindow_KeyDown;
             Focusable = true;
-            Focus(); 
+            Focus();
+
+            _gameManager = new GameManager(GameCanvas);
+            _gameManager.SetStartCharacteristics();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Up)
+            if (e.Key == Key.Enter)
             {
-                _gameManager.Jump();
+                _isGameStarted = true;
+                _gameManager.StartGame();
+                _gameManager.ObjectHandler.Run();
             }
-            else if (e.Key == Key.Down)
+            else if (e.Key == Key.Up && _isGameStarted)
             {
-                _gameManager.Crouch();
+                _gameManager.ObjectHandler.Jump();
+            }
+            else if (e.Key == Key.Down && _isGameStarted)
+            {
+                _gameManager.ObjectHandler.Crouch();
             }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down)
+            if (e.Key == Key.Down && _isGameStarted)
             {
-                _gameManager.Run(); 
+                _gameManager.ObjectHandler.Run(); 
             }
         }
     }

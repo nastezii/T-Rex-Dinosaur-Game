@@ -8,58 +8,61 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Random _random;
         private DispatcherTimer _gameTimer;
-        private ObjectHandler _objectHandler;
-        private List<double> _highScores;
+        private List<double> _scoresList;
         private double _score = 0;
         private readonly double _lineOfGround = 16;
-        private double _SpeedOfEntities = 8;
+        private double _speedOfEntities = 8;
+        public ObjectHandler ObjectHandler { get; private set; }
 
         public GameManager(Canvas canvas) 
         {
             _canvas = canvas;
             _random = new Random();
             _gameTimer = new DispatcherTimer();
-            _objectHandler = new ObjectHandler(_random, _canvas, _SpeedOfEntities, _lineOfGround);
-            _highScores = new List<double>();
-        }
+            ObjectHandler = new ObjectHandler(_random, _canvas, _speedOfEntities, _lineOfGround);
+            _scoresList = new List<double>();
 
-        public void StartGame()
-        {
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
-            _objectHandler.InitializeStartWindow();
             _gameTimer.Tick += GameLoop;
-            _gameTimer.Start();
+        }
+
+        public void StartGame() => _gameTimer.Start();
+
+        public void SetStartCharacteristics()
+        {
+            _score = 0;
+            _speedOfEntities = 8;
+
+            if (_scoresList.Count == 0)
+                ObjectHandler.InitializeStartWindow(_score);
+            else
+                ObjectHandler.InitializeStartWindow(_score, _scoresList.Max());
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
-            if (!_objectHandler.CheckCollision())
+            if (!ObjectHandler.CheckCollision())
             {
-                _objectHandler.UpdateEntitites();
+                ObjectHandler.UpdateEntitites();
                 CalculateScore();
-                _objectHandler.IncreaseSpeed(0.00001);
+                ObjectHandler.UpdateScore(_score);
+                ObjectHandler.IncreaseSpeed(0.00001);
             }
             else
             {
-                _objectHandler.DinoDead();
+                ObjectHandler.DinoDead();
                 EndGame();
-                _highScores.Add(_score);
+                _scoresList.Add(_score);
             }  
         }
 
-        private void CalculateScore() => _score += _SpeedOfEntities;
-
-        private void PauseGame() => _gameTimer.Stop();
+        private void CalculateScore() => _score += _speedOfEntities;
 
         private void EndGame()
-        { 
-            PauseGame();
-            _highScores.Add(_score);
+        {
+            _gameTimer.Stop();
+            _scoresList.Add(_score);
         }
-
-        public void Jump() => _objectHandler.Jump();
-        public void Run() => _objectHandler.Run();
-        public void Crouch() => _objectHandler.Crouch();
     }
 }

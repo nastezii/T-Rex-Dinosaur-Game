@@ -1,6 +1,7 @@
 ﻿using ChromeDinoGame.Entities;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ChromeDinoGame.Services
 {
@@ -12,9 +13,12 @@ namespace ChromeDinoGame.Services
         private double _lineOfGround;
         private Dino _dino;
         private ObstaclesGenerator _obstaclesGenerator;
-        private List<Road> _roads = new List<Road>();
         private List<Obstacle> _obstacles = new List<Obstacle>();
         private List<Cloud> _clouds = new List<Cloud>();
+        private List<Road> _roads = new List<Road>();
+        private TextBlock _scoreBlock;
+        private TextBlock _highestScoreBlock;
+        private TextBlock _instructionBlock;
 
         public ObjectHandler(Random random, Canvas canvas, double speedOfEntities, double lineOfGround)
         {
@@ -24,25 +28,75 @@ namespace ChromeDinoGame.Services
             _speedOfEntities = speedOfEntities;
             _dino = new Dino(lineOfGround, _speedOfEntities);
             _obstaclesGenerator = new ObstaclesGenerator(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
+            _instructionBlock = new TextBlock
+            {
+                Text = "Reach 100000 points to complete the game\nPress ENTER to start",
+                FontSize = 18,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.Gray,
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(150, 140, 0, 0)
+            };
         }
-        public void InitializeStartWindow()
+
+        public void InitializeStartWindow(double score, double highestScore = -1)
         {
+            RenderEntity(_dino);
             AddRoad(0);
             AddRoad();
             AddCloud(_random.Next(200, 500));
+
+            DisplayScore(score);
+            if (highestScore == -1)
+            {
+                _canvas.Children.Add(_instructionBlock);
+                Panel.SetZIndex(_instructionBlock, 10);
+            }    
+            else
+                DisplayHighestScore(highestScore);
+        }
+
+        public void UpdateScore(double score) => _scoreBlock.Text = $"score: {score}";
+
+        private void DisplayScore(double score)
+        {
+            _scoreBlock = new TextBlock
+            {
+                Text = $"score: {score}",
+                FontSize = 16,
+                Foreground = Brushes.DarkSlateGray,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(500, 20, 0, 0)
+            };
+
+            _canvas.Children.Add(_scoreBlock);
+        }
+
+        private void DisplayHighestScore(double highestScore)
+        {
+            _highestScoreBlock = new TextBlock
+            {
+                Text = $"HI {highestScore}",
+                FontSize = 16,
+                Foreground = Brushes.DarkSlateGray,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(480, 20, 0, 0)
+            };
+
+            _canvas.Children.Add(_highestScoreBlock);
         }
 
         public void IncreaseSpeed(double speedIncrement) => _speedOfEntities += speedIncrement;
 
         public void UpdateEntitites()
         {
+            if (_canvas.Children.Contains(_instructionBlock))
+                _canvas.Children.Remove(_instructionBlock);
+            
             UpdateClouds();
             UpdateRoads();
             UpdateObstacles();
-
-            if (!_canvas.Children.Contains(_dino.Sprite))
-                RenderEntity(_dino);
-
             UpdateDino();
         }
 
@@ -135,8 +189,6 @@ namespace ChromeDinoGame.Services
         {
             for (int i = _clouds.Count - 1; i >= 0; i--)
             {
-                if (!_canvas.Children.Contains(_clouds[i].Sprite))
-                    RenderEntity(_clouds[i]);
 
                 if (_clouds[i].IsInWindow(_canvas.Width))
                     UpdatePosition(_clouds[i]);
@@ -173,9 +225,22 @@ namespace ChromeDinoGame.Services
             }
         }
 
-        private void AddObstacle() => _obstacles.Add(_obstaclesGenerator.GenerateObstacle());
-        private void AddRoad(double x = 650) => _roads.Add(new Road(_random, _speedOfEntities, x, _lineOfGround));
-        private void AddCloud(double x = 650) => _clouds.Add(new Cloud(x, _random.Next(200, 340), _speedOfEntities / 10));
+        private void AddObstacle()
+        {
+            _obstacles.Add(_obstaclesGenerator.GenerateObstacle());
+            RenderEntity(_obstacles[_obstacles.Count - 1]);
+        }
+        private void AddRoad(double x = 650)
+        {
+            _roads.Add(new Road(_random, _speedOfEntities, x, _lineOfGround));
+            RenderEntity(_roads[_roads.Count - 1]);
+        }
+
+        private void AddCloud(double x = 650)
+        {
+            _clouds.Add(new Cloud(x, _random.Next(200, 340), _speedOfEntities / 10));
+            RenderEntity(_clouds[_clouds.Count - 1]);
+        } 
 
         private void RenderEntity(Entity entity)
         {

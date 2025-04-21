@@ -6,7 +6,7 @@
         private const string _crouchingGifPath = "pack://application:,,,/Resources/dino_crouch.gif";
         private const string _startImagePath = "pack://application:,,,/Resources/dino_start.png";
         private const string _endImagePath = "pack://application:,,,/Resources/dino_dead.png";
-        public bool IsRunning { get; private set; } = true;
+        public bool IsRunning { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
         public bool IsAlive { get; private set; } = true;
@@ -17,7 +17,7 @@
 
         public Dino(double lineOfGround, double speed)
         {
-            SetRunningSprite();
+            SetStartSprite();
 
             _lineOfGround = lineOfGround;
 

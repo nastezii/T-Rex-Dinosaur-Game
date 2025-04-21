@@ -2,7 +2,7 @@
 
 namespace ChromeDinoGame.Services
 {
-    class ObstaclesGenerator
+    class ObstacleSpawner
     {
         private static Random _random = new Random();
         private readonly double _canvasWidth;
@@ -10,7 +10,7 @@ namespace ChromeDinoGame.Services
         private readonly double _lineOfGround;
         private double _speed;
 
-        public ObstaclesGenerator(double speed, double canvasWidth, double canvasHeight, double lineOfGround)
+        public ObstacleSpawner(double speed, double canvasWidth, double canvasHeight, double lineOfGround)
         {
             _speed = speed;
             _canvasHeight = canvasHeight;

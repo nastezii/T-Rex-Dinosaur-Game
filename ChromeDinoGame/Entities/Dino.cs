@@ -78,7 +78,7 @@
             }
         }
 
-        public void Dead()
+        public void SetDinoDead()
         {
             IsCrouching = false;
             IsJumping = false;

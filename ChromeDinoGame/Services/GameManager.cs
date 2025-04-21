@@ -8,8 +8,8 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Random _random;
         private DispatcherTimer _gameTimer;
-        private List<double> _scoresList;
-        private double _score = 0;
+        private List<double> _scoresHistory;
+        private double _currentScore = 0;
         private readonly double _lineOfGround = 16;
         private double _speedOfEntities = 8;
         public ObjectHandler ObjectHandler { get; private set; }
@@ -20,7 +20,7 @@ namespace ChromeDinoGame.Services
             _random = new Random();
             _gameTimer = new DispatcherTimer();
             ObjectHandler = new ObjectHandler(_random, _canvas, _speedOfEntities, _lineOfGround);
-            _scoresList = new List<double>();
+            _scoresHistory = new List<double>();
 
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
@@ -31,38 +31,38 @@ namespace ChromeDinoGame.Services
 
         public void SetStartCharacteristics()
         {
-            _score = 0;
+            _currentScore = 0;
             _speedOfEntities = 8;
 
-            if (_scoresList.Count == 0)
-                ObjectHandler.InitializeStartWindow(_score);
+            if (_scoresHistory.Count == 0)
+                ObjectHandler.InitializeStartWindow(_currentScore);
             else
-                ObjectHandler.InitializeStartWindow(_score, _scoresList.Max());
+                ObjectHandler.InitializeStartWindow(_currentScore, _scoresHistory.Max());
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
             if (!ObjectHandler.CheckCollision())
             {
-                ObjectHandler.UpdateEntitites();
+                ObjectHandler.UpdateEntities();
                 CalculateScore();
-                ObjectHandler.UpdateScore(_score);
+                ObjectHandler.IncrementGameSpeed(_currentScore);
                 ObjectHandler.IncreaseSpeed(0.00001);
             }
             else
             {
-                ObjectHandler.DinoDead();
+                ObjectHandler.HandleDinoDeath();
                 EndGame();
-                _scoresList.Add(_score);
+                _scoresHistory.Add(_currentScore);
             }  
         }
 
-        private void CalculateScore() => _score += _speedOfEntities;
+        private void CalculateScore() => _currentScore += _speedOfEntities;
 
         private void EndGame()
         {
             _gameTimer.Stop();
-            _scoresList.Add(_score);
+            _scoresHistory.Add(_currentScore);
         }
     }
 }

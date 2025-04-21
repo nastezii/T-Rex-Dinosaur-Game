@@ -12,7 +12,7 @@ namespace ChromeDinoGame.Services
         private double _speedOfEntities;
         private double _lineOfGround;
         private Dino _dino;
-        private ObstaclesGenerator _obstaclesGenerator;
+        private ObstacleSpawner _obstaclesGenerator;
         private List<Obstacle> _obstacles = new List<Obstacle>();
         private List<Cloud> _clouds = new List<Cloud>();
         private List<Road> _roads = new List<Road>();
@@ -27,7 +27,7 @@ namespace ChromeDinoGame.Services
             _lineOfGround = lineOfGround;
             _speedOfEntities = speedOfEntities;
             _dino = new Dino(lineOfGround, _speedOfEntities);
-            _obstaclesGenerator = new ObstaclesGenerator(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
+            _obstaclesGenerator = new ObstacleSpawner(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
             _instructionBlock = new TextBlock
             {
                 Text = "Reach 100000 points to complete the game\nPress ENTER to start",
@@ -57,7 +57,7 @@ namespace ChromeDinoGame.Services
                 DisplayHighestScore(highestScore);
         }
 
-        public void UpdateScore(double score) => _scoreBlock.Text = $"score: {score}";
+        public void IncrementGameSpeed(double score) => _scoreBlock.Text = $"score: {score}";
 
         private void DisplayScore(double score)
         {
@@ -89,7 +89,7 @@ namespace ChromeDinoGame.Services
 
         public void IncreaseSpeed(double speedIncrement) => _speedOfEntities += speedIncrement;
 
-        public void UpdateEntitites()
+        public void UpdateEntities()
         {
             if (_canvas.Children.Contains(_instructionBlock))
                 _canvas.Children.Remove(_instructionBlock);
@@ -142,10 +142,10 @@ namespace ChromeDinoGame.Services
             }
         }
 
-        public void DinoDead()
+        public void HandleDinoDeath()
         { 
             _canvas.Children.Remove( _dino.Sprite);
-            _dino.Dead();
+            _dino.SetDinoDead();
             RenderEntity(_dino);
         }
 

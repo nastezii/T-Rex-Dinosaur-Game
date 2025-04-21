@@ -8,6 +8,7 @@ namespace ChromeDinoGame
     {
         private GameManager _gameManager;
         private bool _isGameStarted = false;
+
         public MainWindow()
         {
             InitializeComponent();

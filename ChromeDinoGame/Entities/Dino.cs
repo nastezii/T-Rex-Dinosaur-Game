@@ -1,5 +1,4 @@
-﻿
-namespace ChromeDinoGame.Entities
+﻿namespace ChromeDinoGame.Entities
 {
     class Dino : Entity
     {
@@ -10,16 +9,18 @@ namespace ChromeDinoGame.Entities
         public bool IsRunning { get; private set; } = true;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
+        public bool IsAlive { get; private set; } = true;
 
         private readonly double _lineOfGround;
         private double _initialJumpSpeed;
-        private double _gravity = 0.5;
+        private double _gravity = 0.6;
 
-        public Dino(double canvasWidth, double canvasHeight, double lineOfGround, double speed)
+        public Dino(double lineOfGround, double speed)
         {
             SetRunningSprite();
 
             _lineOfGround = lineOfGround;
+
             Speed = _initialJumpSpeed = speed * 2;
             PosY = lineOfGround;
             PosX = 50;
@@ -82,6 +83,7 @@ namespace ChromeDinoGame.Entities
             IsCrouching = false;
             IsJumping = false;
             IsRunning = false;
+            IsAlive = false;
             SetEndSprite();
         }
 

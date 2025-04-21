@@ -11,7 +11,7 @@ namespace ChromeDinoGame.Entities
         public double Height { get; protected set; }
         public double PosX { get; protected set; }
         public double PosY { get; protected set; }
-        public double Speed { get; set; }
+        public double Speed { get; protected set; }
 
         public bool IsInWindow(double canvasWith) => PosX > - canvasWith + 10 ;
 

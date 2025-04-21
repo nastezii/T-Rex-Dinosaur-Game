@@ -1,5 +1,4 @@
-﻿
-namespace ChromeDinoGame.Entities
+﻿namespace ChromeDinoGame.Entities
 {
     class Bird : Obstacle
     {

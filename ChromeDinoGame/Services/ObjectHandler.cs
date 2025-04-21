@@ -22,7 +22,7 @@ namespace ChromeDinoGame.Services
             _random = random;
             _lineOfGround = lineOfGround;
             _speedOfEntities = speedOfEntities;
-            _dino = new Dino(canvas.Width, canvas.Height, lineOfGround, _speedOfEntities);
+            _dino = new Dino(lineOfGround, _speedOfEntities);
             _obstaclesGenerator = new ObstaclesGenerator(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
         }
         public void InitializeStartWindow()
@@ -60,7 +60,7 @@ namespace ChromeDinoGame.Services
 
         public void Jump()
         {
-            if (!_dino.IsJumping)
+            if (!_dino.IsJumping && _dino.IsAlive)
             {
                 _canvas.Children.Remove(_dino.Sprite);
                 _dino.Jump();
@@ -70,7 +70,7 @@ namespace ChromeDinoGame.Services
 
         public void Crouch()
         {
-            if (!_dino.IsCrouching)
+            if (!_dino.IsCrouching && _dino.IsAlive)
             {
                 _canvas.Children.Remove(_dino.Sprite);
                 _dino.Crouch();
@@ -80,7 +80,7 @@ namespace ChromeDinoGame.Services
 
         public void Run()
         {
-            if (!_dino.IsRunning)
+            if (!_dino.IsRunning && _dino.IsAlive)
             {
                 _canvas.Children.Remove(_dino.Sprite);
                 _dino.Run();

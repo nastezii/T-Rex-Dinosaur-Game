@@ -32,10 +32,6 @@ namespace ChromeDinoGame.Services
             _gameTimer.Start();
         }
 
-        public void Jump() => _objectHandler.Jump();
-        public void Run() => _objectHandler.Run();
-        public void Crouch() => _objectHandler.Crouch();
-
         private void GameLoop(object sender, EventArgs e)
         {
             if (!_objectHandler.CheckCollision())
@@ -61,5 +57,9 @@ namespace ChromeDinoGame.Services
             PauseGame();
             _highScores.Add(_score);
         }
+
+        public void Jump() => _objectHandler.Jump();
+        public void Run() => _objectHandler.Run();
+        public void Crouch() => _objectHandler.Crouch();
     }
 }

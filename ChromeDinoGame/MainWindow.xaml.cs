@@ -24,11 +24,15 @@ namespace ChromeDinoGame
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && !_isGameStarted)      
             {
                 _isGameStarted = true;
                 _gameManager.StartGame();
                 _gameManager.ObjectHandler.Run();
+            }
+            else if (e.Key == Key.Enter && !_gameManager.ObjectHandler.Dino.IsAlive)
+            {
+                _gameManager.RestartGame();
             }
             else if (e.Key == Key.Up && _isGameStarted)
             {

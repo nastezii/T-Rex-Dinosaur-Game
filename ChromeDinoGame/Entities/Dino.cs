@@ -87,6 +87,13 @@
             SetEndSprite();
         }
 
+        public void ReviveDino()
+        {
+            IsAlive = true;
+            PosY = _lineOfGround;
+            Run();
+        }
+
         private void SetRunningSprite() => SetSpriteCharacteristics(_rinningGifPath, true);
         private void SetCrouchSprite() => SetSpriteCharacteristics(_crouchingGifPath, true);
         private void SetStartSprite() => SetSpriteCharacteristics(_startImagePath, false);

@@ -7,11 +7,11 @@ namespace ChromeDinoGame.Services
 {
     class ObjectHandler
     {
+        public Dino Dino { get; private set; }
         private Canvas _canvas;
         private Random _random;
         private double _speedOfEntities;
         private double _lineOfGround;
-        private Dino _dino;
         private ObstacleSpawner _obstaclesGenerator;
         private List<Obstacle> _obstacles = new List<Obstacle>();
         private List<Cloud> _clouds = new List<Cloud>();
@@ -26,7 +26,7 @@ namespace ChromeDinoGame.Services
             _random = random;
             _lineOfGround = lineOfGround;
             _speedOfEntities = speedOfEntities;
-            _dino = new Dino(lineOfGround, _speedOfEntities);
+            Dino = new Dino(lineOfGround, _speedOfEntities);
             _obstaclesGenerator = new ObstacleSpawner(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
             _instructionBlock = new TextBlock
             {
@@ -40,34 +40,52 @@ namespace ChromeDinoGame.Services
             };
         }
 
-        public void InitializeStartWindow(double score, double highestScore = -1)
+        public void InitializeStartWindow(double score)
         {
-            RenderEntity(_dino);
+            RenderEntity(Dino);
             AddRoad(0);
             AddRoad();
             AddCloud(_random.Next(200, 500));
 
             DisplayScore(score);
-            if (highestScore == -1)
-            {
-                _canvas.Children.Add(_instructionBlock);
-                Panel.SetZIndex(_instructionBlock, 10);
-            }    
-            else
-                DisplayHighestScore(highestScore);
+            DisplayHighestScore(score);
+            _canvas.Children.Add(_instructionBlock);
+            Panel.SetZIndex(_instructionBlock, 10);
         }
 
-        public void IncrementGameSpeed(double score) => _scoreBlock.Text = $"score: {score}";
+        public void RestartGame(double score, double highestScore)
+        {
+            _obstacles.Clear();
+            _clouds.Clear();
+            _roads.Clear();
+            _canvas.Children.Clear();
+            _speedOfEntities = 8;
+
+            AddRoad(0);
+            AddRoad();
+            AddCloud(_random.Next(200, 500));
+            Dino.ReviveDino();
+            RenderEntity(Dino);
+            DisplayScore(score);
+            DisplayHighestScore(highestScore);
+        }
+
+        public void UpdateGameScores(double score, double highestScore = -1)
+        {
+            _scoreBlock.Text = $"score: {(int)score}";
+            if (highestScore <= score)
+                _highestScoreBlock.Text = $"HI {(int)score}";
+        } 
 
         private void DisplayScore(double score)
         {
             _scoreBlock = new TextBlock
             {
-                Text = $"score: {score}",
+                Text = $"score: {(int)score}",
                 FontSize = 16,
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(500, 20, 0, 0)
+                Margin = new Thickness(520, 20, 0, 0)
             };
 
             _canvas.Children.Add(_scoreBlock);
@@ -77,17 +95,17 @@ namespace ChromeDinoGame.Services
         {
             _highestScoreBlock = new TextBlock
             {
-                Text = $"HI {highestScore}",
+                Text = $"HI {(int)highestScore}",
                 FontSize = 16,
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(480, 20, 0, 0)
+                Margin = new Thickness(420, 21, 0, 0)
             };
 
             _canvas.Children.Add(_highestScoreBlock);
         }
 
-        public void IncreaseSpeed(double speedIncrement) => _speedOfEntities += speedIncrement;
+        public void UpdateSpeed(double speed) => _speedOfEntities = speed;
 
         public void UpdateEntities()
         {
@@ -102,7 +120,7 @@ namespace ChromeDinoGame.Services
 
         public bool CheckCollision()
         {
-            Rect dinoRect = new Rect(_dino.PosX, _dino.PosY, _dino.Width - 20, _dino.Height - 20);
+            Rect dinoRect = new Rect(Dino.PosX, Dino.PosY, Dino.Width - 20, Dino.Height - 20);
 
             foreach (Obstacle obstacle in _obstacles)
             {
@@ -114,51 +132,51 @@ namespace ChromeDinoGame.Services
 
         public void Jump()
         {
-            if (!_dino.IsJumping && _dino.IsAlive)
+            if (!Dino.IsJumping && Dino.IsAlive)
             {
-                _canvas.Children.Remove(_dino.Sprite);
-                _dino.Jump();
-                RenderEntity(_dino);
+                _canvas.Children.Remove(Dino.Sprite);
+                Dino.Jump();
+                RenderEntity(Dino);
             }
         }
 
         public void Crouch()
         {
-            if (!_dino.IsCrouching && _dino.IsAlive)
+            if (!Dino.IsCrouching && Dino.IsAlive)
             {
-                _canvas.Children.Remove(_dino.Sprite);
-                _dino.Crouch();
-                RenderEntity(_dino);
+                _canvas.Children.Remove(Dino.Sprite);
+                Dino.Crouch();
+                RenderEntity(Dino);
             }
         }
 
         public void Run()
         {
-            if (!_dino.IsRunning && _dino.IsAlive)
+            if (!Dino.IsRunning && Dino.IsAlive)
             {
-                _canvas.Children.Remove(_dino.Sprite);
-                _dino.Run();
-                RenderEntity(_dino);
+                _canvas.Children.Remove(Dino.Sprite);
+                Dino.Run();
+                RenderEntity(Dino);
             }
         }
 
         public void HandleDinoDeath()
         { 
-            _canvas.Children.Remove( _dino.Sprite);
-            _dino.SetDinoDead();
-            RenderEntity(_dino);
+            _canvas.Children.Remove( Dino.Sprite);
+            Dino.SetDinoDead();
+            RenderEntity(Dino);
         }
 
         private void UpdateDino()
         {
-            if (_dino.IsJumping)
+            if (Dino.IsJumping)
             {
-                _dino.MoveObject();
-                UpdatePosition(_dino);
+                Dino.MoveObject();
+                UpdatePosition(Dino);
             }
-            if (!_dino.IsCrouching && !_dino.IsRunning && !_dino.IsJumping)
+            if (!Dino.IsCrouching && !Dino.IsRunning && !Dino.IsJumping)
             {
-                _canvas.Children.Remove(_dino.Sprite);
+                _canvas.Children.Remove(Dino.Sprite);
                 Run();
             }
         }

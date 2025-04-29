@@ -54,7 +54,7 @@ namespace ChromeDinoGame.Services
             }
             else
             {
-                ObjectHandler.HandleDinoDeath();
+                ObjectHandler.RenderGameOverElements();
                 _gameTimer.Stop();
                 _scoresHistory.Add(_currentScore);
             }  

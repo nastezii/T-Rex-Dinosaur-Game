@@ -19,6 +19,7 @@ namespace ChromeDinoGame.Services
         private TextBlock _scoreBlock;
         private TextBlock _highestScoreBlock;
         private TextBlock _instructionBlock;
+        private TextBlock _replayBlock;
 
         public ObjectHandler(Random random, Canvas canvas, double speedOfEntities, double lineOfGround)
         {
@@ -28,6 +29,7 @@ namespace ChromeDinoGame.Services
             _speedOfEntities = speedOfEntities;
             Dino = new Dino(lineOfGround, _speedOfEntities);
             _obstaclesGenerator = new ObstacleSpawner(_speedOfEntities, _canvas.Width, _canvas.Height, lineOfGround);
+
             _instructionBlock = new TextBlock
             {
                 Text = "Reach 100000 points to complete the game\nPress ENTER to start",
@@ -35,8 +37,17 @@ namespace ChromeDinoGame.Services
                 FontWeight = FontWeights.Bold,
                 Foreground = Brushes.Gray,
                 TextAlignment = TextAlignment.Center,
-                TextWrapping = TextWrapping.Wrap,
                 Margin = new Thickness(150, 140, 0, 0)
+            };
+
+            _replayBlock = new TextBlock
+            {
+                Text = "Press ENTER to replay",
+                FontSize = 18,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.Gray,
+                TextAlignment = TextAlignment.Center,
+                Margin = new Thickness(240, 170, 0, 0)
             };
         }
 
@@ -55,6 +66,7 @@ namespace ChromeDinoGame.Services
 
         public void RestartGame(double score, double highestScore)
         {
+            _replayBlock.Visibility = Visibility.Hidden;
             _obstacles.Clear();
             _clouds.Clear();
             _roads.Clear();
@@ -89,6 +101,7 @@ namespace ChromeDinoGame.Services
             };
 
             _canvas.Children.Add(_scoreBlock);
+            Panel.SetZIndex(_scoreBlock, 10);
         }
 
         private void DisplayHighestScore(double highestScore)
@@ -103,6 +116,7 @@ namespace ChromeDinoGame.Services
             };
 
             _canvas.Children.Add(_highestScoreBlock);
+            Panel.SetZIndex(_highestScoreBlock, 10);
         }
 
         public void UpdateSpeed(double speed) => _speedOfEntities = speed;
@@ -160,11 +174,19 @@ namespace ChromeDinoGame.Services
             }
         }
 
-        public void HandleDinoDeath()
+        public void RenderGameOverElements()
         { 
             _canvas.Children.Remove( Dino.Sprite);
             Dino.SetDinoDead();
             RenderEntity(Dino);
+
+            if (!_canvas.Children.Contains(_replayBlock))
+            {
+                _canvas.Children.Add(_replayBlock);
+                Canvas.SetZIndex(_replayBlock, 10);
+            }
+            
+            _replayBlock.Visibility = Visibility.Visible;
         }
 
         private void UpdateDino()
@@ -275,6 +297,8 @@ namespace ChromeDinoGame.Services
             else
                 Canvas.SetZIndex(entity.Sprite, 1);
         }   
+
+
 
         private void UpdatePosition(Entity entity)
         {

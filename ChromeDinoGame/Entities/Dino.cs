@@ -10,6 +10,7 @@
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
         public bool IsAlive { get; private set; } = true;
+        public bool IsVinner { get; private set; } = false;
 
         private readonly double _lineOfGround;
         private double _initialJumpSpeed;
@@ -92,6 +93,15 @@
             IsAlive = true;
             PosY = _lineOfGround;
             Run();
+        }
+        public void SetVinState()
+        {
+            IsVinner = true;
+            IsJumping = false;
+            IsRunning = false;
+            IsCrouching = false;
+            PosY = _lineOfGround;
+            SetStartSprite();
         }
 
         private void SetRunningSprite() => SetSpriteCharacteristics(_rinningGifPath, true);

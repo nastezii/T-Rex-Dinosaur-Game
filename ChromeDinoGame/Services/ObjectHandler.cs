@@ -20,6 +20,7 @@ namespace ChromeDinoGame.Services
         private TextBlock _highestScoreBlock;
         private TextBlock _instructionBlock;
         private TextBlock _replayBlock;
+        private TextBlock _victoryBlock;
 
         public ObjectHandler(Random random, Canvas canvas, double speedOfEntities, double lineOfGround)
         {
@@ -48,6 +49,16 @@ namespace ChromeDinoGame.Services
                 Foreground = Brushes.Gray,
                 TextAlignment = TextAlignment.Center,
                 Margin = new Thickness(240, 170, 0, 0)
+            };
+
+            _victoryBlock = new TextBlock
+            {
+                Text = "🎉 Congratulations! You’ve completed the Dino Run! 🎉\nFinal Score: 100000",
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Foreground = Brushes.Gold,
+                TextAlignment = TextAlignment.Center,
+                Margin = new Thickness(60, 140, 0, 0)
             };
         }
 
@@ -80,6 +91,17 @@ namespace ChromeDinoGame.Services
             RenderEntity(Dino);
             DisplayScore(score);
             DisplayHighestScore(highestScore);
+        }
+
+        public void RenderVictoryScreen()
+        {
+            UpdateGameScores(100000, 100000);
+            _canvas.Children.Remove(Dino.Sprite);
+            Dino.SetVinState();
+            RenderEntity(Dino);
+
+            _canvas.Children.Add(_victoryBlock);
+            Panel.SetZIndex(_victoryBlock, 10);
         }
 
         public void UpdateGameScores(double score, double highestScore = -1)

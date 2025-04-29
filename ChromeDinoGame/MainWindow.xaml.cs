@@ -24,29 +24,32 @@ namespace ChromeDinoGame
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && !_isGameStarted)      
+            if (!_gameManager.ObjectHandler.Dino.IsVinner)
             {
-                _isGameStarted = true;
-                _gameManager.StartGame();
-                _gameManager.ObjectHandler.Run();
-            }
-            else if (e.Key == Key.Enter && !_gameManager.ObjectHandler.Dino.IsAlive)
-            {
-                _gameManager.RestartGame();
-            }
-            else if (e.Key == Key.Up && _isGameStarted)
-            {
-                _gameManager.ObjectHandler.Jump();
-            }
-            else if (e.Key == Key.Down && _isGameStarted)
-            {
-                _gameManager.ObjectHandler.Crouch();
+                if (e.Key == Key.Enter && !_isGameStarted)
+                {
+                    _isGameStarted = true;
+                    _gameManager.StartGame();
+                    _gameManager.ObjectHandler.Run();
+                }
+                else if (e.Key == Key.Enter && !_gameManager.ObjectHandler.Dino.IsAlive)
+                {
+                    _gameManager.RestartGame();
+                }
+                else if (e.Key == Key.Up && _isGameStarted)
+                {
+                    _gameManager.ObjectHandler.Jump();
+                }
+                else if (e.Key == Key.Down && _isGameStarted)
+                {
+                    _gameManager.ObjectHandler.Crouch();
+                }
             }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down && _isGameStarted)
+            if (e.Key == Key.Down && _isGameStarted && !_gameManager.ObjectHandler.Dino.IsVinner)
             {
                 _gameManager.ObjectHandler.Run(); 
             }

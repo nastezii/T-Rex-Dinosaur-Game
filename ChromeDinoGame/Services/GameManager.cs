@@ -39,7 +39,12 @@ namespace ChromeDinoGame.Services
 
         private void GameLoop(object sender, EventArgs e)
         {
-            if (!ObjectHandler.CheckCollision())
+            if (_currentScore >= 100000)
+            {
+                ObjectHandler.RenderVictoryScreen();
+                _gameTimer.Stop();
+            }
+            else if (!ObjectHandler.CheckCollision())
             {
                 ObjectHandler.UpdateEntities();
                 CalculateScore();

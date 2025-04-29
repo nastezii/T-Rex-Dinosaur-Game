@@ -8,6 +8,7 @@ namespace ChromeDinoGame
     {
         private GameManager _gameManager;
         private bool _isGameStarted = false;
+        private bool _isPaused = false;
 
         public MainWindow()
         {
@@ -36,20 +37,29 @@ namespace ChromeDinoGame
                 {
                     _gameManager.RestartGame();
                 }
-                else if (e.Key == Key.Up && _isGameStarted)
+                else if (e.Key == Key.Up && _isGameStarted && !_isPaused)
                 {
                     _gameManager.ObjectHandler.Jump();
                 }
-                else if (e.Key == Key.Down && _isGameStarted)
+                else if (e.Key == Key.Down && _isGameStarted && !_isPaused)
                 {
                     _gameManager.ObjectHandler.Crouch();
                 }
+            }
+            if (e.Key == Key.P)
+            {
+                if(_isPaused)
+                    _isPaused = false;
+                else
+                    _isPaused = true;
+
+                _gameManager.TogglePause(_isPaused);
             }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down && _isGameStarted && !_gameManager.ObjectHandler.Dino.IsVinner)
+            if (e.Key == Key.Down && _isGameStarted && !_gameManager.ObjectHandler.Dino.IsVinner && !_isPaused)
             {
                 _gameManager.ObjectHandler.Run(); 
             }

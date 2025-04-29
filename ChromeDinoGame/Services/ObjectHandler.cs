@@ -196,6 +196,10 @@ namespace ChromeDinoGame.Services
             }
         }
 
+        public void RemoveDinoSprite() => _canvas.Children.Remove(Dino.Sprite);
+
+        public void RenderDinoSprite() => RenderEntity(Dino);
+
         public void RenderGameOverElements()
         { 
             _canvas.Children.Remove( Dino.Sprite);

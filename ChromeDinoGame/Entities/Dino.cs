@@ -45,6 +45,13 @@
             }
         }
 
+        public void SetCommonState()
+        {
+            SetStartSprite();
+            PosY = _lineOfGround;
+            PosX = 50;
+        }
+
         public void Jump()
         {
             IsRunning = false;

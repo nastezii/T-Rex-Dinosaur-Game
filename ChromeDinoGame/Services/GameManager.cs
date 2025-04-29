@@ -26,6 +26,22 @@ namespace ChromeDinoGame.Services
             _gameTimer.Tick += GameLoop;
         }
 
+        public void TogglePause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                ObjectHandler.RemoveDinoSprite();
+                ObjectHandler.Dino.SetCommonState();
+                ObjectHandler.RenderDinoSprite();
+                _gameTimer.Stop();
+            }
+            else
+            {
+                _gameTimer.Start();
+                ObjectHandler.Run();
+            }
+        }
+
         public void StartGame() => _gameTimer.Start();
 
         public void SetStartCharacteristics() => ObjectHandler.InitializeStartWindow(_currentScore);

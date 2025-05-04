@@ -1,14 +1,19 @@
-﻿namespace ChromeDinoGame.Entities
+﻿using System.Windows.Controls;
+
+namespace ChromeDinoGame.Entities
 {
     class Road : Entity
     {
-        public Road(Random random, double speed, double x, double y)
+        public Road(Canvas canvas, Random random, double speed, double x, double y)
         {
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png", false);
-
+            _canvas = canvas;
             PosX = x; 
             PosY = y;
-            Speed = speed;
+            _speed = speed;
+
+            SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{random.Next(1, 4)}.png", false);
         }
+
+        public override bool IsInWindow() => PosX > - Width + 25;
     }
 }

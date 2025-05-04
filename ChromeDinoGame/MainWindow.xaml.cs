@@ -7,7 +7,9 @@ namespace ChromeDinoGame
     public partial class MainWindow : Window
     {
         private GameManager _gameManager;
+
         private bool _isGameStarted = false;
+        private bool _isGameActive = false;
         private bool _isPaused = false;
 
         public MainWindow()
@@ -19,50 +21,45 @@ namespace ChromeDinoGame
             Focusable = true;
             Focus();
 
-            _gameManager = new GameManager(GameCanvas);
-            _gameManager.SetStartCharacteristics();
+            _gameManager = new GameManager(GameCanvas, EndGame);
+            _gameManager.InitializeGame();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!_gameManager.ObjectHandler.Dino.IsVinner)
+            if (e.Key == Key.Enter)
             {
-                if (e.Key == Key.Enter && !_isGameStarted)
-                {
-                    _isGameStarted = true;
+                if (!_isGameStarted)
                     _gameManager.StartGame();
-                    _gameManager.ObjectHandler.Run();
-                }
-                else if (e.Key == Key.Enter && !_gameManager.ObjectHandler.Dino.IsAlive)
-                {
+                else if (_isGameStarted && !_isGameActive)
                     _gameManager.RestartGame();
-                }
-                else if (e.Key == Key.Up && _isGameStarted && !_isPaused)
-                {
-                    _gameManager.ObjectHandler.Jump();
-                }
-                else if (e.Key == Key.Down && _isGameStarted && !_isPaused)
-                {
-                    _gameManager.ObjectHandler.Crouch();
-                }
             }
-            if (e.Key == Key.P)
+            else if (e.Key == Key.Up)
             {
-                if(_isPaused)
-                    _isPaused = false;
-                else
-                    _isPaused = true;
-
-                _gameManager.TogglePause(_isPaused);
+                
+            }
+            else if (e.Key == Key.Down)
+            {
+                
+            }
+            else if (e.Key == Key.P)
+            {
+                
             }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down && _isGameStarted && !_gameManager.ObjectHandler.Dino.IsVinner && !_isPaused)
+            if (e.Key == Key.Down)
             {
-                _gameManager.ObjectHandler.Run(); 
+                
             }
+        }
+
+        private void EndGame()
+        {
+            _isGameActive = false ; 
+            _isPaused = false ;
         }
     }
 }

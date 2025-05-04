@@ -4,11 +4,13 @@ namespace ChromeDinoGame.Entities
 {
     public abstract class Obstacle : Entity
     {
-        public bool CheckCollision(Rect dinoRect, Obstacle obstacle)
-        {
-            Rect obstRect = new Rect(obstacle.PosX, obstacle.PosY, obstacle.Width - 20, obstacle.Height - 20);
+        public Rect CollisionBox { get; private set; }
 
-            if (dinoRect.IntersectsWith(obstRect))
+        protected void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
+
+        public bool CheckCollision(Rect dinoRect, Rect obstacleRect)
+        {
+            if (dinoRect.IntersectsWith(obstacleRect))
             {
                 return true;
             }

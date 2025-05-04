@@ -8,79 +8,64 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Random _random;
         private DispatcherTimer _gameTimer;
-        private List<double> _scoresHistory;
-        private double _currentScore = 0;
-        private readonly double _lineOfGround = 16;
-        private double _speedOfEntities = 8;
-        public ObjectHandler ObjectHandler { get; private set; }
+        private Action _endGameCallback;
+        EntityHandler _entityHandler;
+        ScoreManager _scoreManager;
+        UIManager _uiManager;
 
-        public GameManager(Canvas canvas) 
+        private double _speedOfEntities = 8;
+        private double _speedInc = 0.00001;
+        private double _lineOfGround = 20;
+
+        public GameManager(Canvas canvas, Action endGameCallBack)
         {
             _canvas = canvas;
             _random = new Random();
-            _gameTimer = new DispatcherTimer();
-            ObjectHandler = new ObjectHandler(_random, _canvas, _speedOfEntities, _lineOfGround);
-            _scoresHistory = new List<double>();
+            _endGameCallback = endGameCallBack;
+            _entityHandler = new EntityHandler(_random, _canvas, EndGame, _speedOfEntities, _lineOfGround, _speedInc);
+            _scoreManager = new ScoreManager(_speedInc);
+            _uiManager = new UIManager(_canvas);
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
             _gameTimer.Tick += GameLoop;
         }
 
-        public void TogglePause(bool isPaused)
+        public void StartGame()
         {
-            if (isPaused)
-            {
-                ObjectHandler.RemoveDinoSprite();
-                ObjectHandler.Dino.SetCommonState();
-                ObjectHandler.RenderDinoSprite();
-                _gameTimer.Stop();
-            }
-            else
-            {
-                _gameTimer.Start();
-                ObjectHandler.Run();
-            }
+            _uiManager.UpdateStartInfoBlock(false);
+            _gameTimer.Start();
         }
 
-        public void StartGame() => _gameTimer.Start();
-
-        public void SetStartCharacteristics() => ObjectHandler.InitializeStartWindow(_currentScore);
+        public void InitializeGame()
+        { 
+            _entityHandler.InitializeStartWindow();
+            _scoreManager.SetScores();
+            _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
+            _uiManager.UpdateStartInfoBlock(true);
+        }
 
         public void RestartGame()
         {
-            _currentScore = 0;
-            ObjectHandler.RestartGame(_currentScore, _scoresHistory.Max());
+            _canvas.Children.Clear();
+            _entityHandler.InitializeStartWindow();
+            _scoreManager.SetScores();
+            _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
             _gameTimer.Start();
+        }
+
+        public void EndGame()
+        { 
+            _gameTimer.Stop();
+            _uiManager.UpdateReplayInfoBlock(true);
+            _scoreManager.SaveHighestScore();
+            _endGameCallback.Invoke();
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
-            if (_currentScore >= 100000)
-            {
-                ObjectHandler.RenderVictoryScreen();
-                _gameTimer.Stop();
-            }
-            else if (!ObjectHandler.CheckCollision())
-            {
-                ObjectHandler.UpdateEntities();
-                CalculateScore();
-
-                if (_scoresHistory.Count != 0)
-                    ObjectHandler.UpdateGameScores(_currentScore, _scoresHistory.Max());
-                else
-                    ObjectHandler.UpdateGameScores(_currentScore);
-
-                _speedOfEntities += 0.00001;
-                ObjectHandler.UpdateSpeed(_speedOfEntities);
-            }
-            else
-            {
-                ObjectHandler.RenderGameOverElements();
-                _gameTimer.Stop();
-                _scoresHistory.Add(_currentScore);
-            }  
+            _entityHandler.UpdateEntities();
+            _scoreManager.UpdateScores();
+            _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
         }
-
-        private void CalculateScore() => _currentScore += _speedOfEntities;
     }
 }

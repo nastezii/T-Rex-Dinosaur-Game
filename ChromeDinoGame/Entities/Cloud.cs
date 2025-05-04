@@ -1,14 +1,17 @@
-﻿namespace ChromeDinoGame.Entities
+﻿using System.Windows.Controls;
+
+namespace ChromeDinoGame.Entities
 {
     class Cloud : Entity
     {
-        public Cloud(double x, double y, double speed)
+        public Cloud(Canvas canvas, double x, double y, double speed)
         {
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/cloud.png", false);
-
+            _canvas = canvas;
             PosX = x;
             PosY = y;
-            Speed = speed;
+            _speed = speed;
+
+            SetSpriteCharacteristics($"pack://application:,,,/Resources/cloud.png", false);
         }
     }
 }

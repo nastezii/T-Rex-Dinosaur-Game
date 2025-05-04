@@ -1,14 +1,18 @@
-﻿namespace ChromeDinoGame.Entities
+﻿using System.Windows.Controls;
+
+namespace ChromeDinoGame.Entities
 {
     class Bird : Obstacle
     {
-        public Bird(Random random, double canvasWidth, double speed)
+        public Bird(Canvas canvas, Random random, double canvasWidth, double speed) 
         {
-            SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
-
+            _canvas = canvas;
             PosY = random.Next(80, 100);
             PosX = canvasWidth - Width;
-            Speed = speed;
+            _speed = speed;
+
+            SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
+            SetCollisionBox();
         }
     }
 }

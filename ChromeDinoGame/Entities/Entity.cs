@@ -6,16 +6,42 @@ namespace ChromeDinoGame.Entities
 {
     public abstract class Entity
     {
-        public Image Sprite { get; protected set; }
+        protected Canvas _canvas;
+        protected double _speed;
         public double Width { get; protected set; }
         public double Height { get; protected set; }
         public double PosX { get; protected set; }
         public double PosY { get; protected set; }
-        public double Speed { get; protected set; }
+        public Image Sprite { get; protected set; }
 
-        public bool IsInWindow(double canvasWith) => PosX > - canvasWith + 10 ;
+        public virtual bool IsInWindow() => PosX > - Width;
 
-        public virtual void MoveObject() => PosX -= Speed;
+        public virtual void MoveEntity()
+        {
+            PosX -= _speed;
+            Canvas.SetLeft(Sprite, PosX);
+        }
+
+        public void RenderEntity()
+        {
+            if (!_canvas.Children.Contains(Sprite))
+            {
+                _canvas.Children.Add(Sprite);
+                Canvas.SetLeft(Sprite, PosX);
+                Canvas.SetBottom(Sprite, PosY);
+            }
+
+            if (this is Dino)
+                Canvas.SetZIndex(Sprite, 4);
+            else if (this is Obstacle)
+                Canvas.SetZIndex(Sprite, 3);
+            else if (this is Road)
+                Canvas.SetZIndex(Sprite, 2);
+            else
+                Canvas.SetZIndex(Sprite, 1);
+        }
+
+        public void RemoveEntity() => _canvas.Children.Remove(Sprite);
 
         protected void SetSpriteCharacteristics(string path, bool isGif)
         {
@@ -38,6 +64,5 @@ namespace ChromeDinoGame.Entities
                 Height = bitmapImage.Height;
             }
         }
-
     }
 }

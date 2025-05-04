@@ -30,29 +30,39 @@ namespace ChromeDinoGame
             if (e.Key == Key.Enter)
             {
                 if (!_isGameStarted)
+                {
+                    _isGameStarted = true;
+                    _isGameActive = true;
                     _gameManager.StartGame();
+                }
                 else if (_isGameStarted && !_isGameActive)
+                {
+                    _isGameActive = true;
                     _gameManager.RestartGame();
+                }
             }
-            else if (e.Key == Key.Up)
+            else if (e.Key == Key.Up && _isGameActive && !_isPaused)
             {
-                
+                _gameManager.Dino.Jump();
             }
-            else if (e.Key == Key.Down)
+            else if (e.Key == Key.Down && _isGameActive && !_isPaused)
             {
-                
+                _gameManager.Dino.Crouch();
             }
             else if (e.Key == Key.P)
             {
-                
+                if (_isPaused)
+                    _isPaused = false;
+                else
+                    _isPaused = true;
             }
         }
 
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down)
+            if (e.Key == Key.Down && _isGameActive && !_isPaused)
             {
-                
+                _gameManager.Dino.Run();
             }
         }
 

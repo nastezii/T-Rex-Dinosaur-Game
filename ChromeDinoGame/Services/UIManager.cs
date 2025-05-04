@@ -20,9 +20,11 @@ namespace ChromeDinoGame.Services
             {
                 Text = "",
                 FontSize = 16,
+
+
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(420, 21, 0, 0)
+                Margin = new Thickness(400, 21, 0, 0)
             };
 
             _startInfBlock = new TextBlock

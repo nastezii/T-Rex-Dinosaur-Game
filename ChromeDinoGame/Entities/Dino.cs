@@ -14,7 +14,7 @@ namespace ChromeDinoGame.Entities
 
         private readonly double _lineOfGround;
         private double _initialJumpSpeed;
-        private double _gravity = 0.6;
+        private double _gravity = 1;
 
         public Dino(Canvas canvas, double lineOfGround, double speed)
         {
@@ -25,7 +25,6 @@ namespace ChromeDinoGame.Entities
             PosX = 50;
 
             SetIdleSprite();
-            SetCollisionBox();
         }
 
         public void Jump()
@@ -39,7 +38,6 @@ namespace ChromeDinoGame.Entities
                 RemoveEntity();
                 SetIdleSprite();
                 RenderEntity();
-                SetCollisionBox();
             }
         }
 
@@ -53,7 +51,6 @@ namespace ChromeDinoGame.Entities
                 RemoveEntity();
                 SetCrouchingSprite();
                 RenderEntity();
-                SetCollisionBox();
             }
         }
 
@@ -67,7 +64,6 @@ namespace ChromeDinoGame.Entities
                 RemoveEntity();
                 SetRunningSprite();
                 RenderEntity();
-                SetCollisionBox();
             }
         }
 
@@ -84,7 +80,9 @@ namespace ChromeDinoGame.Entities
             IsJumping = false;
             IsRunning = false;
             IsAlive = false;
+            RemoveEntity() ;
             SetDeadSprite();
+            RenderEntity();
         }
 
         public void ReviveDino()
@@ -103,7 +101,7 @@ namespace ChromeDinoGame.Entities
                     IsJumping = false;
                     _speed = _initialJumpSpeed;
                     PosY = _lineOfGround;
-                    Canvas.SetBottom(Sprite, PosX);
+                    Canvas.SetBottom(Sprite, PosY);
                     Run();
                 }
                 else
@@ -112,11 +110,10 @@ namespace ChromeDinoGame.Entities
                     _speed -= _gravity;
                     Canvas.SetBottom(Sprite, PosY);
                 }
-                SetCollisionBox();
             }
         }
 
-        private void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
+        public void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
         private void SetRunningSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_run.gif", true);
         private void SetCrouchingSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_crouch.gif", true);
         private void SetIdleSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_start.png", false);

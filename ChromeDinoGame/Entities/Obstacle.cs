@@ -6,7 +6,7 @@ namespace ChromeDinoGame.Entities
     {
         public Rect CollisionBox { get; private set; }
 
-        protected void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
+        public void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
 
         public bool CheckCollision(Rect dinoRect, Rect obstacleRect)
         {

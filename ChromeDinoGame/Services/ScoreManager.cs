@@ -3,20 +3,14 @@ namespace ChromeDinoGame.Services
 {
     public class ScoreManager
     {
-        private List<double> _scoresHistory;
-        private double _speedInc;
+        private List<double> _scoresHistory = new List<double>();
 
         public double HighestScore { get; private set; }
         public double CurrentScore { get; private set; }
 
-        public ScoreManager(double speedInc)
-        {
-            _speedInc = speedInc;
-            _scoresHistory = new List<double>();
-        }
-
         public void SetScores()
         {
+            _scoresHistory.Add(HighestScore);
             CurrentScore = 0;
 
             if (_scoresHistory.Count == 0)
@@ -25,14 +19,12 @@ namespace ChromeDinoGame.Services
                 HighestScore = _scoresHistory.Max();
         }
 
-        public void UpdateScores()
+        public void UpdateScores(double speed)
         {
-            CurrentScore += _speedInc;
+            CurrentScore += speed;
 
              if (HighestScore <= CurrentScore)
                 HighestScore = CurrentScore;
         }
-
-        public void SaveHighestScore() => _scoresHistory.Add(HighestScore);
     }
 }

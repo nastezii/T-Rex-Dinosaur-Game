@@ -12,7 +12,6 @@ namespace ChromeDinoGame.Entities
             _speed = speed;
 
             SetSpriteCharacteristics($"pack://application:,,,/Resources/cactus_{random.Next(1, 7)}.png", false);
-            SetCollisionBox();
         }
     }
 }

@@ -6,9 +6,11 @@ namespace ChromeDinoGame.Services
     class EntityHandler
     {
         private Canvas _canvas;
+        private Dino _dino;
         private Random _random;
-        private double _speedOfEntities;
         private double _lineOfGround;
+        private double _speedOfEntities;
+        private double _initialSpeedOfEntities;
         private double _speedInc;
         private ObstacleSpawner _obstaclesSpawner;
         private Action _onCollisionCallback;
@@ -16,24 +18,22 @@ namespace ChromeDinoGame.Services
         private List<Cloud> _clouds = new List<Cloud>();
         private List<Road> _roads = new List<Road>();
 
-        public Dino Dino { get; private set; }
-
-        public EntityHandler(Random random, Canvas canvas, Action onCollisionCallback, double speedOfEntities, double lineOfGround, double sppedInc)
+        public EntityHandler(Canvas canvas, Dino dino, Random random, Action onCollisionCallback, double speedOfEntities, double lineOfGround, double sppedInc)
         {
             _canvas = canvas;
+            _dino = dino;
             _random = random;
             _onCollisionCallback = onCollisionCallback;
             _lineOfGround = lineOfGround;
-            _speedOfEntities = speedOfEntities;
+            _speedOfEntities = _initialSpeedOfEntities = speedOfEntities;
             _speedInc = sppedInc;
 
             _obstaclesSpawner = new ObstacleSpawner();
-            Dino = new Dino(_canvas, _lineOfGround, _speedOfEntities);
         }
 
         public void InitializeStartWindow()
         {
-            Dino.RenderEntity();
+            _dino.RenderEntity();
             _roads.Add(new Road(_canvas, _random, _speedOfEntities, 0, _lineOfGround / 1.5));
             _roads[0].RenderEntity();
             _roads.Add(new Road(_canvas, _random, _speedOfEntities, _canvas.Width, _lineOfGround / 1.5));
@@ -42,11 +42,19 @@ namespace ChromeDinoGame.Services
             _clouds[0].RenderEntity();
         }
 
+        public void SetReplayCharacteristics()
+        {
+            _speedOfEntities = _initialSpeedOfEntities;
+            _roads.Clear();
+            _clouds.Clear();
+            _obstacles.Clear();
+        }
+
         public void UpdateEntities()
         {
             _speedOfEntities += _speedInc;
 
-            Dino.MoveEntity();  
+            _dino.MoveEntity();  
             UpdateObstacles();
             UpdateClouds();
             UpdateRoads();
@@ -54,7 +62,9 @@ namespace ChromeDinoGame.Services
 
         private void CheckCollision(Obstacle obstacle)
         {
-            if (obstacle.CheckCollision(Dino.CollisionBox, obstacle.CollisionBox))
+            _dino.SetCollisionBox();
+            obstacle.SetCollisionBox();
+            if (obstacle.CheckCollision(_dino.CollisionBox, obstacle.CollisionBox))
             {
                 _onCollisionCallback.Invoke();
             }

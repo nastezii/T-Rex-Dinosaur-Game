@@ -71,8 +71,6 @@ namespace ChromeDinoGame.Entities
             RemoveEntity();
             SetIdleSprite();
             RenderEntity();
-            PosY = _lineOfGround;
-            PosX = 50;
         }
 
         public void SetDeadCharacteristics()

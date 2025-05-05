@@ -49,12 +49,19 @@ namespace ChromeDinoGame
             {
                 _gameManager.Dino.Crouch();
             }
-            else if (e.Key == Key.P)
+            else if (e.Key == Key.P && _isGameStarted)
             {
                 if (_isPaused)
+                {
                     _isPaused = false;
+                    _isGameActive = true;
+                }
                 else
+                {
                     _isPaused = true;
+                    _isGameActive = false;
+                }
+                _gameManager.togglePause(_isPaused);
             }
         }
 

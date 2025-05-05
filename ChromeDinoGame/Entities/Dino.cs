@@ -8,8 +8,7 @@ namespace ChromeDinoGame.Entities
         public bool IsRunning { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
-        public bool IsAlive { get; private set; } = true;
-        public bool IsVinner { get; private set; } = false;
+        public bool IsActive { get; set; } = true;
         public Rect CollisionBox { get; private set; }
 
         private readonly double _lineOfGround;
@@ -29,7 +28,7 @@ namespace ChromeDinoGame.Entities
 
         public void Jump()
         {
-            if (!IsJumping && IsAlive)
+            if (!IsJumping && IsActive)
             {
                 IsRunning = false;
                 IsCrouching = false;
@@ -43,7 +42,7 @@ namespace ChromeDinoGame.Entities
 
         public void Crouch()
         {
-            if (!IsCrouching && !IsJumping && IsAlive)
+            if (!IsCrouching && !IsJumping && IsActive)
             {
                 IsRunning = false;
                 IsCrouching = true;
@@ -56,7 +55,7 @@ namespace ChromeDinoGame.Entities
 
         public void Run()
         {
-            if (!IsRunning && IsAlive)
+            if (!IsRunning && IsActive)
             {
                 IsCrouching = false;
                 IsRunning = true;
@@ -69,7 +68,9 @@ namespace ChromeDinoGame.Entities
 
         public void SetIdleState()
         {
+            RemoveEntity();
             SetIdleSprite();
+            RenderEntity();
             PosY = _lineOfGround;
             PosX = 50;
         }
@@ -79,15 +80,34 @@ namespace ChromeDinoGame.Entities
             IsCrouching = false;
             IsJumping = false;
             IsRunning = false;
-            IsAlive = false;
+            IsActive = false;
             RemoveEntity() ;
             SetDeadSprite();
             RenderEntity();
         }
 
+        public void ToggleDinoPause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                IsActive = false;
+                SetIdleState();
+            }
+            else 
+            {
+                if (IsRunning)
+                {
+                    RemoveEntity();
+                    SetRunningSprite();
+                    RenderEntity();
+                }
+                IsActive = true;
+            }
+        }
+
         public void ReviveDino()
         {
-            IsAlive = true;
+            IsActive = true;
             PosY = _lineOfGround;
             Run();
         }

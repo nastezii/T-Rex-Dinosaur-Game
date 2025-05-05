@@ -9,6 +9,7 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private TextBlock _scoreBlock;
         private TextBlock _startInfBlock;
+        private TextBlock _pauseBlock;
         private TextBlock _replayInfBlock;
         private TextBlock _victoryBlock;
 
@@ -20,11 +21,9 @@ namespace ChromeDinoGame.Services
             {
                 Text = "",
                 FontSize = 16,
-
-
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(400, 21, 0, 0)
+                Margin = new Thickness(400, 10, 0, 0)
             };
 
             _startInfBlock = new TextBlock
@@ -47,6 +46,15 @@ namespace ChromeDinoGame.Services
                 Margin = new Thickness(240, 170, 0, 0)
             };
 
+            _pauseBlock = new TextBlock
+            {
+                Text = "[P] Pause / Resume",
+                FontSize = 16,
+                Foreground = Brushes.DarkSlateGray,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(230, 10, 0, 0) 
+            }; 
+
             _victoryBlock = new TextBlock
             {
                 Text = "🎉 Congratulations! You’ve completed the Dino Run! 🎉\nFinal Score: 100000",
@@ -60,7 +68,7 @@ namespace ChromeDinoGame.Services
 
         public void UpdateScoreBlock(double score, double highestScore)
         {
-            _scoreBlock.Text = $"HI {(int)highestScore}              score: {(int)score}";
+            _scoreBlock.Text = $"HI {(int)highestScore}          score: {(int)score}";
 
             if (!_canvas.Children.Contains(_scoreBlock))
             {
@@ -72,6 +80,8 @@ namespace ChromeDinoGame.Services
         public void UpdateReplayInfoBlock(bool visibility) => UpdateinfoMessageBlock(_replayInfBlock, visibility);
 
         public void UpdateStartInfoBlock(bool visibility) => UpdateinfoMessageBlock(_startInfBlock, visibility);
+
+        public void DisplayPauseInfBlock() => UpdateinfoMessageBlock(_pauseBlock, true);
 
         public void DisplayVictoryBlock()
         {

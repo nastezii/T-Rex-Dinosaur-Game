@@ -27,7 +27,7 @@ namespace ChromeDinoGame
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && !_gameManager.Dino.IsWinner)
             {
                 if (!_isGameStarted)
                 {
@@ -61,7 +61,7 @@ namespace ChromeDinoGame
                     _isPaused = true;
                     _isGameActive = false;
                 }
-                _gameManager.togglePause(_isPaused);
+                _gameManager.TogglePause(_isPaused);
             }
         }
 

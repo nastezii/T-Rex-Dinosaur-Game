@@ -49,6 +49,14 @@ namespace ChromeDinoGame.Services
             _uiManager.UpdateStartInfoBlock(true);
         }
 
+        public void DeclareVictory()
+        {
+            Dino.SetWinState();
+            _uiManager.DisplayVictoryBlock();
+            _gameTimer.Stop();
+            _endGameCallback.Invoke();
+        }
+
         public void RestartGame()
         {
             _canvas.Children.Clear();
@@ -61,18 +69,14 @@ namespace ChromeDinoGame.Services
             _gameTimer.Start();
         }
 
-        public void togglePause(bool isPaused)
+        public void TogglePause(bool isPaused)
         {
             Dino.ToggleDinoPause(isPaused);
 
             if (isPaused)
-            {
                 _gameTimer.Stop();
-            }
             else
-            {
                 _gameTimer.Start();
-            }
         }
 
         public void EndGame()
@@ -89,6 +93,9 @@ namespace ChromeDinoGame.Services
             _entityHandler.UpdateEntities();
             _scoreManager.UpdateScores(_speedOfEntities);
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
+
+            if(_scoreManager.CurrentScore >= 100000)
+                DeclareVictory();
         }
     }
 }

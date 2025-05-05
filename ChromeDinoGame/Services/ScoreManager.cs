@@ -23,6 +23,9 @@ namespace ChromeDinoGame.Services
         {
             CurrentScore += speed;
 
+            if (CurrentScore >= 100000)
+                CurrentScore = 100000;
+
              if (HighestScore <= CurrentScore)
                 HighestScore = CurrentScore;
         }

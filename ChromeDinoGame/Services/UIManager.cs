@@ -62,7 +62,7 @@ namespace ChromeDinoGame.Services
                 FontWeight = FontWeights.Bold,
                 Foreground = Brushes.Gold,
                 TextAlignment = TextAlignment.Center,
-                Margin = new Thickness(60, 140, 0, 0)
+                Margin = new Thickness(50, 140, 0, 0)
             };
         }
 

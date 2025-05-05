@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ChromeDinoGame.Entities
@@ -9,6 +10,7 @@ namespace ChromeDinoGame.Entities
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
         public bool IsActive { get; set; } = true;
+        public bool IsWinner  { get; set; } = false;
         public Rect CollisionBox { get; private set; }
 
         private readonly double _lineOfGround;
@@ -101,6 +103,12 @@ namespace ChromeDinoGame.Entities
                 }
                 IsActive = true;
             }
+        }
+
+        public void SetWinState()
+        {
+            IsWinner = true;
+            ToggleDinoPause(true);
         }
 
         public void ReviveDino()

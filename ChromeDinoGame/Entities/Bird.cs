@@ -7,7 +7,7 @@ namespace ChromeDinoGame.Entities
         public Bird(Canvas canvas, Random random, double canvasWidth, double speed) 
         {
             _canvas = canvas;
-            PosY = random.Next(80, 100);
+            PosY = random.Next(70, 100);
             PosX = canvasWidth - Width;
             _speed = speed;
 

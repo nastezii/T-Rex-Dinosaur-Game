@@ -11,21 +11,22 @@ namespace ChromeDinoGame.Services
         private Random _random;
         private DispatcherTimer _gameTimer;
         private Action _endGameCallback;
-        EntityHandler _entityHandler;
-        ScoreManager _scoreManager;
-        UIManager _uiManager;
+        private EntityHandler _entityHandler;
+        private ScoreManager _scoreManager;
+        private UIManager _uiManager;
 
-        private double _speedOfEntities = 10;
-        private double _speedInc = 0.00001;
-        private double _lineOfGround = 16;
+        private double _currentSeedOfEntities = 10;
+        private const double INITIAL_SPEED_OF_ENTITIES = 10;
+        private const double SPEED_INC = 0.00001;
+        private const double LINE_OF_GROUND = 16;
 
         public GameManager(Canvas canvas, Action endGameCallBack)
         {
             _canvas = canvas;
-            Dino = new Dino(_canvas, _lineOfGround, _speedOfEntities);
+            Dino = new Dino(_canvas, LINE_OF_GROUND, _currentSeedOfEntities);
             _random = new Random();
             _endGameCallback = endGameCallBack;
-            _entityHandler = new EntityHandler(_canvas, Dino, _random, EndGame, _speedOfEntities, _lineOfGround, _speedInc);
+            _entityHandler = new EntityHandler(_canvas, Dino, _random, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager(_canvas);
             _gameTimer = new DispatcherTimer();
@@ -59,6 +60,7 @@ namespace ChromeDinoGame.Services
 
         public void RestartGame()
         {
+            _currentSeedOfEntities = INITIAL_SPEED_OF_ENTITIES;
             _canvas.Children.Clear();
             _entityHandler.SetReplayCharacteristics();
             _entityHandler.InitializeStartWindow();
@@ -89,9 +91,9 @@ namespace ChromeDinoGame.Services
 
         private void GameLoop(object sender, EventArgs e)
         {
-            _speedOfEntities += _speedInc;
+            _currentSeedOfEntities += SPEED_INC;
             _entityHandler.UpdateEntities();
-            _scoreManager.UpdateScores(_speedOfEntities);
+            _scoreManager.UpdateScores(_currentSeedOfEntities);
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
 
             if(_scoreManager.CurrentScore >= 100000)

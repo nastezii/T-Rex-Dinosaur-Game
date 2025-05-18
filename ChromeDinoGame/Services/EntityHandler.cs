@@ -8,10 +8,12 @@ namespace ChromeDinoGame.Services
         private Canvas _canvas;
         private Dino _dino;
         private Random _random;
+
         private double _lineOfGround;
         private double _speedOfEntities;
-        private double _initialSpeedOfEntities;
         private double _speedInc;
+        private readonly double _initialSpeedOfEntities;
+
         private ObstacleSpawner _obstaclesSpawner;
         private Action _onCollisionCallback;
         private List<Obstacle> _obstacles = new List<Obstacle>();
@@ -86,7 +88,7 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(50, 75))
+            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(30, 75))
             {
                 _obstacles.Add(_obstaclesSpawner.GenerateObstacle(_canvas, _lineOfGround, _speedOfEntities));
                 _obstacles[_obstacles.Count - 1].RenderEntity();

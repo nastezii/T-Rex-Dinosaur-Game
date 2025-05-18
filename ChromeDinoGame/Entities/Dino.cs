@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace ChromeDinoGame.Entities
@@ -15,7 +14,7 @@ namespace ChromeDinoGame.Entities
 
         private readonly double _lineOfGround;
         private double _initialJumpSpeed;
-        private double _gravity = 1;
+        private double _jumpGravity = 1.1;
 
         public Dino(Canvas canvas, double lineOfGround, double speed)
         {
@@ -133,7 +132,7 @@ namespace ChromeDinoGame.Entities
                 else
                 {
                     PosY += _speed;
-                    _speed -= _gravity;
+                    _speed -= _jumpGravity;
                     Canvas.SetBottom(Sprite, PosY);
                 }
             }

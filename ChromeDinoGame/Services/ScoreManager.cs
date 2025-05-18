@@ -1,5 +1,4 @@
-﻿
-namespace ChromeDinoGame.Services
+﻿namespace ChromeDinoGame.Services
 {
     public class ScoreManager
     {

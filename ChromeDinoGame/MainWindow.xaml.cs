@@ -49,7 +49,7 @@ namespace ChromeDinoGame
             {
                 _gameManager.Dino.Crouch();
             }
-            else if (e.Key == Key.P && _isGameStarted)
+            else if (e.Key == Key.P && _isGameStarted && _gameManager.Dino.IsActive)
             {
                 if (_isPaused)
                 {

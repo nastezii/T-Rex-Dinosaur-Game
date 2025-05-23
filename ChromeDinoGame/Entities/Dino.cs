@@ -9,7 +9,7 @@ namespace ChromeDinoGame.Entities
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
         public bool IsActive { get; set; } = true;
-        public bool IsWinner  { get; set; } = false;
+        public bool IsAlive { get; set; } = true;
         public Rect CollisionBox { get; private set; }
 
         private readonly double _lineOfGround;
@@ -80,6 +80,7 @@ namespace ChromeDinoGame.Entities
             IsJumping = false;
             IsRunning = false;
             IsActive = false;
+            IsAlive = false;
             RemoveEntity() ;
             SetDeadSprite();
             RenderEntity();
@@ -106,13 +107,14 @@ namespace ChromeDinoGame.Entities
 
         public void SetWinState()
         {
-            IsWinner = true;
+            IsActive = false;
             ToggleDinoPause(true);
         }
 
         public void ReviveDino()
         {
             IsActive = true;
+            IsAlive = true;
             PosY = _lineOfGround;
             Run();
         }

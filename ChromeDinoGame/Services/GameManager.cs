@@ -96,7 +96,7 @@ namespace ChromeDinoGame.Services
             _scoreManager.UpdateScores(_currentSeedOfEntities);
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
 
-            if(_scoreManager.CurrentScore >= 100000)
+            if(_scoreManager.CurrentScore >= 1000000)
                 DeclareVictory();
         }
     }

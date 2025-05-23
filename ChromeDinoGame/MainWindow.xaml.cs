@@ -27,29 +27,52 @@ namespace ChromeDinoGame
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && !_gameManager.Dino.IsWinner)
+            if (e.Key == Key.Enter)
+                HandleEnterKey();
+            else if (e.Key == Key.Up)
+                HandleUpKey();
+            else if (e.Key == Key.Down)
+                HandleDownKey();
+            else if (e.Key == Key.P)
+                HandlePauseKey();
+        }
+
+        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down && _isGameActive && !_isPaused)
+                _gameManager.Dino.Run();
+        }
+
+        private void HandleEnterKey()
+        {
+            if (!_isGameStarted)
             {
-                if (!_isGameStarted)
-                {
-                    _isGameStarted = true;
-                    _isGameActive = true;
-                    _gameManager.StartGame();
-                }
-                else if (_isGameStarted && !_isGameActive)
-                {
-                    _isGameActive = true;
-                    _gameManager.RestartGame();
-                }
+                _isGameStarted = true;
+                _isGameActive = true;
+                _gameManager.StartGame();
             }
-            else if (e.Key == Key.Up && _isGameActive && !_isPaused)
+            else if (!_isGameActive && !_isPaused)
             {
+                _isGameActive = true;
+                _gameManager.RestartGame();
+            }
+        }
+
+        private void HandleUpKey()
+        {
+            if (_isGameActive && !_isPaused)
                 _gameManager.Dino.Jump();
-            }
-            else if (e.Key == Key.Down && _isGameActive && !_isPaused)
-            {
+        }
+
+        private void HandleDownKey()
+        {
+            if (_isGameActive && !_isPaused)
                 _gameManager.Dino.Crouch();
-            }
-            else if (e.Key == Key.P && _isGameStarted && _gameManager.Dino.IsActive)
+        }
+
+        private void HandlePauseKey()
+        {
+            if (_isGameStarted && _gameManager.Dino.IsAlive)
             {
                 if (_isPaused)
                 {
@@ -62,14 +85,6 @@ namespace ChromeDinoGame
                     _isGameActive = false;
                 }
                 _gameManager.TogglePause(_isPaused);
-            }
-        }
-
-        private void MainWindow_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Down && _isGameActive && !_isPaused)
-            {
-                _gameManager.Dino.Run();
             }
         }
 

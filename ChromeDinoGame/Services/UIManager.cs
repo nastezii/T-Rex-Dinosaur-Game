@@ -23,12 +23,12 @@ namespace ChromeDinoGame.Services
                 FontSize = 16,
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(400, 10, 0, 0)
+                Margin = new Thickness(380, 10, 0, 0)
             };
 
             _startInfBlock = new TextBlock
             {
-                Text = "Reach 100000 points to complete the game\nPress ENTER to start",
+                Text = "Reach 1000000 points to complete the game\nPress ENTER to start",
                 FontSize = 18,
                 FontWeight = FontWeights.Bold,
                 Foreground = Brushes.Gray,
@@ -52,7 +52,7 @@ namespace ChromeDinoGame.Services
                 FontSize = 16,
                 Foreground = Brushes.DarkSlateGray,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(230, 10, 0, 0) 
+                Margin = new Thickness(210, 10, 0, 0) 
             }; 
 
             _victoryBlock = new TextBlock
@@ -68,7 +68,7 @@ namespace ChromeDinoGame.Services
 
         public void UpdateScoreBlock(double score, double highestScore)
         {
-            _scoreBlock.Text = $"HI {(int)highestScore}          score: {(int)score}";
+            _scoreBlock.Text = $"HI {(int)highestScore}         score: {(int)score}";
 
             if (!_canvas.Children.Contains(_scoreBlock))
             {

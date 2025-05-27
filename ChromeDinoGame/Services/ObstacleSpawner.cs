@@ -7,12 +7,12 @@ namespace ChromeDinoGame.Services
     {
         private static Random _random = new Random();
 
-        public Obstacle GenerateObstacle(Canvas canvas, double lineOfGround, double speed)
+        public Obstacle GenerateObstacle(double lineOfGround, double speed)
         {
             if (_random.Next(0, 4) == 0)
-                return new Bird(canvas, _random, canvas.Width, speed);
+                return new Bird(_random, speed);
             else
-                return new Cactus(canvas, _random, canvas.Width, canvas.Height, lineOfGround, speed);
+                return new Cactus(_random,lineOfGround, speed);
         }
     }
 }

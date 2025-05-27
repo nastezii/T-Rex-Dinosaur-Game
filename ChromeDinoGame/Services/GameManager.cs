@@ -7,7 +7,6 @@ namespace ChromeDinoGame.Services
     class GameManager
     {
         public Dino Dino { get; protected set; }
-        private Canvas _canvas;
         private Random _random;
         private DispatcherTimer _gameTimer;
         private Action _endGameCallback;
@@ -22,13 +21,12 @@ namespace ChromeDinoGame.Services
 
         public GameManager(Canvas canvas, Action endGameCallBack)
         {
-            _canvas = canvas;
-            Dino = new Dino(_canvas, LINE_OF_GROUND, _currentSeedOfEntities);
+            Dino = new Dino(LINE_OF_GROUND, _currentSeedOfEntities);
             _random = new Random();
             _endGameCallback = endGameCallBack;
-            _entityHandler = new EntityHandler(_canvas, Dino, _random, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
+            _entityHandler = new EntityHandler(Dino, _random, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
             _scoreManager = new ScoreManager();
-            _uiManager = new UIManager(_canvas);
+            _uiManager = new UIManager();
             _gameTimer = new DispatcherTimer();
             _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
             _gameTimer.Tick += GameLoop;
@@ -61,7 +59,7 @@ namespace ChromeDinoGame.Services
         public void RestartGame()
         {
             _currentSeedOfEntities = INITIAL_SPEED_OF_ENTITIES;
-            _canvas.Children.Clear();
+            GlobalCanvas.GameArea.Children.Clear();
             _entityHandler.SetReplayCharacteristics();
             _entityHandler.InitializeStartWindow();
             _scoreManager.SetScores();

@@ -4,9 +4,8 @@ namespace ChromeDinoGame.Entities
 {
     class Road : Entity
     {
-        public Road(Canvas canvas, Random random, double speed, double x, double y)
+        public Road(Random random, double speed, double x, double y)
         {
-            _canvas = canvas;
             PosX = x; 
             PosY = y;
             _speed = speed;

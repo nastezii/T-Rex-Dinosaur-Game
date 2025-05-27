@@ -16,9 +16,8 @@ namespace ChromeDinoGame.Entities
         private double _initialJumpSpeed;
         private double _jumpGravity = 1.1;
 
-        public Dino(Canvas canvas, double lineOfGround, double speed)
+        public Dino(double lineOfGround, double speed)
         {
-            _canvas = canvas;
             _lineOfGround = lineOfGround;
             _speed = _initialJumpSpeed = speed * 2;
             PosY = lineOfGround;

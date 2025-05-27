@@ -1,12 +1,12 @@
 ﻿using System.Windows.Controls;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
+using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
     public abstract class Entity
     {
-        protected Canvas _canvas;
         protected double _speed;
         public double Width { get; protected set; }
         public double Height { get; protected set; }
@@ -24,9 +24,9 @@ namespace ChromeDinoGame.Entities
 
         public void RenderEntity()
         {
-            if (!_canvas.Children.Contains(Sprite))
+            if (!GlobalCanvas.GameArea.Children.Contains(Sprite))
             {
-                _canvas.Children.Add(Sprite);
+                GlobalCanvas.GameArea.Children.Add(Sprite);
                 Canvas.SetLeft(Sprite, PosX);
                 Canvas.SetBottom(Sprite, PosY);
             }
@@ -41,7 +41,7 @@ namespace ChromeDinoGame.Entities
                 Canvas.SetZIndex(Sprite, 1);
         }
 
-        public void RemoveEntity() => _canvas.Children.Remove(Sprite);
+        public void RemoveEntity() => GlobalCanvas.GameArea.Children.Remove(Sprite);
 
         protected void SetSpriteCharacteristics(string path, bool isGif)
         {

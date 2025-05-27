@@ -22,6 +22,7 @@ namespace ChromeDinoGame
             Focus();
 
             _gameManager = new GameManager(GameCanvas, EndGame);
+            GlobalCanvas.Initialize(GameCanvas);
             _gameManager.InitializeGame();
         }
 

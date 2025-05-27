@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
+using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
     class Cactus : Obstacle
     {
-        public Cactus(Canvas canvas, Random random, double canvasWidth, double canvasHeight, double lineOfGround, double speed)
+        public Cactus(Random random, double lineOfGround, double speed)
         {
-            _canvas = canvas;
-            PosX = canvasWidth - Width;
+            PosX = GlobalCanvas.GameArea.Width - Width;
             PosY = lineOfGround;
             _speed = speed;
 

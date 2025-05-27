@@ -6,17 +6,14 @@ namespace ChromeDinoGame.Services
 {
     public class UIManager
     {
-        private Canvas _canvas;
         private TextBlock _scoreBlock;
         private TextBlock _startInfBlock;
         private TextBlock _pauseBlock;
         private TextBlock _replayInfBlock;
         private TextBlock _victoryBlock;
 
-        public UIManager(Canvas canvas)
+        public UIManager()
         {
-            _canvas = canvas;
-
             _scoreBlock = new TextBlock
             {
                 Text = "",
@@ -70,9 +67,9 @@ namespace ChromeDinoGame.Services
         {
             _scoreBlock.Text = $"HI {(int)highestScore}         score: {(int)score}";
 
-            if (!_canvas.Children.Contains(_scoreBlock))
+            if (!GlobalCanvas.GameArea.Children.Contains(_scoreBlock))
             {
-                _canvas.Children.Add(_scoreBlock);
+                GlobalCanvas.GameArea.Children.Add(_scoreBlock);
                 Panel.SetZIndex(_scoreBlock, 10);
             }
         }
@@ -85,15 +82,15 @@ namespace ChromeDinoGame.Services
 
         public void DisplayVictoryBlock()
         {
-            _canvas.Children.Add(_victoryBlock);
+            GlobalCanvas.GameArea.Children.Add(_victoryBlock);
             Panel.SetZIndex(_scoreBlock, 10);
         }
 
         private void UpdateinfoMessageBlock(TextBlock block, bool visibility)
         {
-            if (!_canvas.Children.Contains(block))
+            if (!GlobalCanvas.GameArea.Children.Contains(block))
             {
-                _canvas.Children.Add(block);
+                GlobalCanvas.GameArea.Children.Add(block);
                 Panel.SetZIndex(block, 10);
             }
 

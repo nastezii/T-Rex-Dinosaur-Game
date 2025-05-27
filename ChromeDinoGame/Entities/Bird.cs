@@ -1,14 +1,14 @@
 ﻿using System.Windows.Controls;
+using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
     class Bird : Obstacle
     {
-        public Bird(Canvas canvas, Random random, double canvasWidth, double speed) 
+        public Bird(Random random, double speed) 
         {
-            _canvas = canvas;
             PosY = random.Next(70, 100);
-            PosX = canvasWidth - Width;
+            PosX = GlobalCanvas.GameArea.Width - Width;
             _speed = speed;
 
             SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);

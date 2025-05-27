@@ -1,4 +1,4 @@
-﻿using ChromeDinoGame.Services;
+﻿using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Entities
 {

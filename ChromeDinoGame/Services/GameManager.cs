@@ -1,27 +1,24 @@
 ﻿using System.Windows.Threading;
 using ChromeDinoGame.Entities;
+using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Services
 {
     class GameManager
     {
-        public Dino Dino { get; protected set; }
         private DispatcherTimer _gameTimer;
         private Action _endGameCallback;
         private EntityHandler _entityHandler;
         private ScoreManager _scoreManager;
         private UIManager _uiManager;
 
-        private double _currentSeedOfEntities = 10;
-        private const double INITIAL_SPEED_OF_ENTITIES = 10;
-        private const double SPEED_INC = 0.00001;
-        private const double LINE_OF_GROUND = 16;
+        private double _currentSpeedOfEntities = Characteristics.SpeedOfEntities;
+        private const double SpeedInc = Characteristics.SpeedInc;
 
         public GameManager(Action endGameCallBack)
         {
-            Dino = new Dino(LINE_OF_GROUND, _currentSeedOfEntities);
             _endGameCallback = endGameCallBack;
-            _entityHandler = new EntityHandler(Dino, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
+            _entityHandler = new EntityHandler(EndGame);
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager();
             _gameTimer = new DispatcherTimer();
@@ -31,7 +28,7 @@ namespace ChromeDinoGame.Services
 
         public void StartGame()
         {
-            Dino.Run();
+            Dino.Instance.Run();
             _uiManager.UpdateStartInfoBlock(false);
             _gameTimer.Start();
         }
@@ -47,7 +44,7 @@ namespace ChromeDinoGame.Services
 
         public void DeclareVictory()
         {
-            Dino.SetWinState();
+            Dino.Instance.SetWinState();
             _uiManager.DisplayVictoryBlock();
             _gameTimer.Stop();
             _endGameCallback.Invoke();
@@ -55,20 +52,20 @@ namespace ChromeDinoGame.Services
 
         public void RestartGame()
         {
-            _currentSeedOfEntities = INITIAL_SPEED_OF_ENTITIES;
+            _currentSpeedOfEntities = Characteristics.SpeedOfEntities;
             GlobalCanvas.GameArea.Children.Clear();
             _entityHandler.SetReplayCharacteristics();
             _entityHandler.InitializeStartWindow();
             _scoreManager.SetScores();
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
             _uiManager.DisplayPauseInfBlock();
-            Dino.ReviveDino();
+            Dino.Instance.ReviveDino();
             _gameTimer.Start();
         }
 
         public void TogglePause(bool isPaused)
         {
-            Dino.ToggleDinoPause(isPaused);
+            Dino.Instance.ToggleDinoPause(isPaused);
 
             if (isPaused)
                 _gameTimer.Stop();
@@ -79,16 +76,16 @@ namespace ChromeDinoGame.Services
         public void EndGame()
         {
             _gameTimer.Stop();
-            Dino.SetDeadCharacteristics();
+            Dino.Instance.SetDeadCharacteristics();
             _uiManager.UpdateReplayInfoBlock(true);
             _endGameCallback.Invoke();
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
-            _currentSeedOfEntities += SPEED_INC;
+            _currentSpeedOfEntities += SpeedInc;
             _entityHandler.UpdateEntities();
-            _scoreManager.UpdateScores(_currentSeedOfEntities);
+            _scoreManager.UpdateScores(_currentSpeedOfEntities);
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
 
             if(_scoreManager.CurrentScore >= 1000000)

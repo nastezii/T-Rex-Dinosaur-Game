@@ -1,4 +1,5 @@
 ﻿using ChromeDinoGame.Entities;
+using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Services
 {
@@ -9,7 +10,7 @@ namespace ChromeDinoGame.Services
             if (GlobalRandom.Instance.Next(0, 4) == 0)
                 return new Bird(speed);
             else
-                return new Cactus(lineOfGround, speed);
+                return new Cactus(speed);
         }
     }
 }

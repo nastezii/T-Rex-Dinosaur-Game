@@ -1,4 +1,4 @@
-﻿namespace ChromeDinoGame.Services
+﻿namespace ChromeDinoGame.Globals
 {
     public static class GlobalRandom
     {

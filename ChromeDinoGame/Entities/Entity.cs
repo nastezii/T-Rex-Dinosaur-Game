@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using WpfAnimatedGif;
 using System.Windows.Media.Imaging;
-using ChromeDinoGame.Services;
+using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Entities
 {

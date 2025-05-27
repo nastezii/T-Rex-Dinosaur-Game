@@ -1,4 +1,6 @@
-﻿using ChromeDinoGame.Services;
+﻿using ChromeDinoGame.Entities;
+using ChromeDinoGame.Globals;
+using ChromeDinoGame.Services;
 using System.Windows;
 using System.Windows.Input;
 
@@ -41,7 +43,7 @@ namespace ChromeDinoGame
         private void MainWindow_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Down && _isGameActive && !_isPaused)
-                _gameManager.Dino.Run();
+                Dino.Instance.Run();
         }
 
         private void HandleEnterKey()
@@ -62,18 +64,18 @@ namespace ChromeDinoGame
         private void HandleUpKey()
         {
             if (_isGameActive && !_isPaused)
-                _gameManager.Dino.Jump();
+                Dino.Instance.Jump();
         }
 
         private void HandleDownKey()
         {
             if (_isGameActive && !_isPaused)
-                _gameManager.Dino.Crouch();
+                Dino.Instance.Crouch();
         }
 
         private void HandlePauseKey()
         {
-            if (_isGameStarted && _gameManager.Dino.IsAlive)
+            if (_isGameStarted && Dino.Instance.IsAlive)
             {
                 if (_isPaused)
                 {

@@ -1,10 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
+using ChromeDinoGame.Globals;
+
 namespace ChromeDinoGame.Entities
 {
     class Dino : Entity
     {
+        private static Dino _dino;
+        private const double LineOfGround = Characteristics.LineOfGround;
+        private const double JumpSpeed = Characteristics.JumpSpeed; 
+        private const double Gravity = Characteristics.Gravity;
+
         public bool IsRunning { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
@@ -12,18 +19,24 @@ namespace ChromeDinoGame.Entities
         public bool IsAlive { get; set; } = true;
         public Rect CollisionBox { get; private set; }
 
-        private readonly double _lineOfGround;
-        private double _initialJumpSpeed;
-        private double _jumpGravity = 1.1;
-
-        public Dino(double lineOfGround, double speed)
+        private Dino()
         {
-            _lineOfGround = lineOfGround;
-            _speed = _initialJumpSpeed = speed * 2;
-            PosY = lineOfGround;
-            PosX = 50;
+            _speed = JumpSpeed;
+            PosY = LineOfGround;
+            PosX = Characteristics.PlayerPosX;
 
             SetIdleSprite();
+        }
+
+        public static Dino Instance
+        {
+            get
+            {
+                if (_dino == null)
+                    _dino = new Dino();
+
+                return _dino;
+            }
         }
 
         public void Jump()
@@ -114,7 +127,7 @@ namespace ChromeDinoGame.Entities
         {
             IsActive = true;
             IsAlive = true;
-            PosY = _lineOfGround;
+            PosY = LineOfGround;
             Run();
         }
 
@@ -122,18 +135,18 @@ namespace ChromeDinoGame.Entities
         {
             if (IsJumping)
             {
-                if (PosY + _speed <= _lineOfGround)
+                if (PosY + _speed <= LineOfGround)
                 {
                     IsJumping = false;
-                    _speed = _initialJumpSpeed;
-                    PosY = _lineOfGround;
+                    _speed = JumpSpeed;
+                    PosY = LineOfGround;
                     Canvas.SetBottom(Sprite, PosY);
                     Run();
                 }
                 else
                 {
                     PosY += _speed;
-                    _speed -= _jumpGravity;
+                    _speed -= Gravity;
                     Canvas.SetBottom(Sprite, PosY);
                 }
             }

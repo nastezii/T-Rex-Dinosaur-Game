@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ChromeDinoGame.Services
+namespace ChromeDinoGame.Globals
 {
     public static class GlobalCanvas
     {

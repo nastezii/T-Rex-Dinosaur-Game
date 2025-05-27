@@ -1,13 +1,13 @@
-﻿using ChromeDinoGame.Services;
+﻿using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Entities
 {
     class Cactus : Obstacle
     {
-        public Cactus(double lineOfGround, double speed)
+        public Cactus(double speed)
         {
             PosX = GlobalCanvas.GameArea.Width - Width;
-            PosY = lineOfGround;
+            PosY = Characteristics.LineOfGround;
             _speed = speed;
 
             SetSpriteCharacteristics($"pack://application:,,,/Resources/cactus_{GlobalRandom.Instance.Next(1, 7)}.png", false);

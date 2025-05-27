@@ -1,13 +1,12 @@
-﻿using System.Windows.Controls;
-using ChromeDinoGame.Services;
+﻿using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
     class Bird : Obstacle
     {
-        public Bird(Random random, double speed) 
+        public Bird(double speed) 
         {
-            PosY = random.Next(70, 100);
+            PosY = GlobalRandom.Instance.Next(70, 100);
             PosX = GlobalCanvas.GameArea.Width - Width;
             _speed = speed;
 

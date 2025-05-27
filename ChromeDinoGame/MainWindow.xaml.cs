@@ -21,7 +21,7 @@ namespace ChromeDinoGame
             Focusable = true;
             Focus();
 
-            _gameManager = new GameManager(GameCanvas, EndGame);
+            _gameManager = new GameManager(EndGame);
             GlobalCanvas.Initialize(GameCanvas);
             _gameManager.InitializeGame();
         }

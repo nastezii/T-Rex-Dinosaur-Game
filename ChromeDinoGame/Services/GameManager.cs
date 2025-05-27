@@ -7,7 +7,6 @@ namespace ChromeDinoGame.Services
     class GameManager
     {
         public Dino Dino { get; protected set; }
-        private Random _random;
         private DispatcherTimer _gameTimer;
         private Action _endGameCallback;
         private EntityHandler _entityHandler;
@@ -19,12 +18,11 @@ namespace ChromeDinoGame.Services
         private const double SPEED_INC = 0.00001;
         private const double LINE_OF_GROUND = 16;
 
-        public GameManager(Canvas canvas, Action endGameCallBack)
+        public GameManager(Action endGameCallBack)
         {
             Dino = new Dino(LINE_OF_GROUND, _currentSeedOfEntities);
-            _random = new Random();
             _endGameCallback = endGameCallBack;
-            _entityHandler = new EntityHandler(Dino, _random, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
+            _entityHandler = new EntityHandler(Dino, EndGame, _currentSeedOfEntities, LINE_OF_GROUND, SPEED_INC);
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager();
             _gameTimer = new DispatcherTimer();

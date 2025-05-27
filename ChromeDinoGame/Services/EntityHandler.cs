@@ -6,7 +6,6 @@ namespace ChromeDinoGame.Services
     class EntityHandler
     {
         private Dino _dino;
-        private Random _random;
 
         private double _lineOfGround;
         private double _speedOfEntities;
@@ -19,10 +18,9 @@ namespace ChromeDinoGame.Services
         private List<Cloud> _clouds = new List<Cloud>();
         private List<Road> _roads = new List<Road>();
 
-        public EntityHandler(Dino dino, Random random, Action onCollisionCallback, double speedOfEntities, double lineOfGround, double sppedInc)
+        public EntityHandler(Dino dino, Action onCollisionCallback, double speedOfEntities, double lineOfGround, double sppedInc)
         {
             _dino = dino;
-            _random = random;
             _onCollisionCallback = onCollisionCallback;
             _lineOfGround = lineOfGround;
             _speedOfEntities = _initialSpeedOfEntities = speedOfEntities;
@@ -34,11 +32,11 @@ namespace ChromeDinoGame.Services
         public void InitializeStartWindow()
         {
             _dino.RenderEntity();
-            _roads.Add(new Road(_random, _speedOfEntities, 0, _lineOfGround / 1.5));
+            _roads.Add(new Road(_speedOfEntities, 0, _lineOfGround / 1.5));
             _roads[0].RenderEntity();
-            _roads.Add(new Road(_random, _speedOfEntities, GlobalCanvas.GameArea.Width, _lineOfGround / 1.5));
+            _roads.Add(new Road(_speedOfEntities, GlobalCanvas.GameArea.Width, _lineOfGround / 1.5));
             _roads[1].RenderEntity();
-            _clouds.Add(new Cloud(_random.Next(200,400), _random.Next(180, 300), _speedOfEntities / 10));
+            _clouds.Add(new Cloud(_speedOfEntities / 10));
             _clouds[0].RenderEntity();
         }
 
@@ -86,7 +84,7 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < _random.Next(30, 75))
+            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < GlobalRandom.Instance.Next(30, 75))
             {
                 _obstacles.Add(_obstaclesSpawner.GenerateObstacle(_lineOfGround, _speedOfEntities));
                 _obstacles[_obstacles.Count - 1].RenderEntity();
@@ -108,9 +106,9 @@ namespace ChromeDinoGame.Services
                 }
             }
 
-            if (_clouds[_clouds.Count - 1].PosX < _random.Next(150, 300))
+            if (_clouds[_clouds.Count - 1].PosX < GlobalRandom.Instance.Next(150, 300))
             {
-                _clouds.Add(new Cloud(GlobalCanvas.GameArea.Width, _random.Next(180, 300), _speedOfEntities / 10));
+                _clouds.Add(new Cloud(_speedOfEntities / 10));
                 _clouds[_clouds.Count - 1].RenderEntity();
             }
         }
@@ -127,7 +125,7 @@ namespace ChromeDinoGame.Services
                 {
                     _roads[i].RemoveEntity();
                     _roads.RemoveAt(i);
-                    _roads.Add(new Road(_random, _speedOfEntities, GlobalCanvas.GameArea.Width, _lineOfGround / 1.5));
+                    _roads.Add(new Road(_speedOfEntities, GlobalCanvas.GameArea.Width, _lineOfGround / 1.5));
                     _roads[_roads.Count - 1].RenderEntity();
                 }
             }

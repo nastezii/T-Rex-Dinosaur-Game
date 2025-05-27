@@ -9,7 +9,7 @@ namespace ChromeDinoGame.Services
         public static void Initialize(Canvas canvas)
         {
             if (GameArea != null)
-                throw new InvalidOperationException("GameArea has already been initialized.");
+                throw new InvalidOperationException("GlobalArea has already been initialized.");
 
             GameArea = canvas;
         }

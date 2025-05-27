@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using ChromeDinoGame.Services;
+﻿using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {

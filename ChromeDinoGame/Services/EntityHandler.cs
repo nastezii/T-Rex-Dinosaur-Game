@@ -12,16 +12,15 @@ namespace ChromeDinoGame.Services
         private const double SpeedInc = Characteristics.SpeedInc;
         private double _currentSpeed = InitialSpeed;
 
-        private ObstacleSpawner _obstaclesSpawner;
         private Action _onCollisionCallback;
+        private ObstacleSpawner _obstaclesSpawner = new ObstacleSpawner();
         private List<Obstacle> _obstacles = new List<Obstacle>();
         private List<Cloud> _clouds = new List<Cloud>();
         private List<Road> _roads = new List<Road>();
 
         public EntityHandler(Action onCollisionCallback)
         {
-            _onCollisionCallback = onCollisionCallback;
-            _obstaclesSpawner = new ObstacleSpawner();
+            _onCollisionCallback = onCollisionCallback;;
         }
 
         public void InitializeStartWindow()

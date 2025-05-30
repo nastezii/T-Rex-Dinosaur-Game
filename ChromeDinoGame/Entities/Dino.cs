@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-
 using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Entities

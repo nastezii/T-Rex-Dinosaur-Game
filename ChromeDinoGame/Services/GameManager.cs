@@ -22,7 +22,7 @@ namespace ChromeDinoGame.Services
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager();
             _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(3);
+            _gameTimer.Interval = TimeSpan.FromMilliseconds(1000/60);
             _gameTimer.Tick += GameLoop;
         }
 

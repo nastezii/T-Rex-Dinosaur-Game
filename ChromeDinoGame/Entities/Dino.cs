@@ -16,7 +16,6 @@ namespace ChromeDinoGame.Entities
         public bool IsCrouching { get; private set; } = false;
         public bool IsActive { get; set; } = true;
         public bool IsAlive { get; set; } = true;
-        public Rect CollisionBox { get; private set; }
 
         private Dino()
         {
@@ -151,7 +150,6 @@ namespace ChromeDinoGame.Entities
             }
         }
 
-        public void SetCollisionBox() => CollisionBox = new Rect(PosX, PosY, Width - 20, Height - 20);
         private void SetRunningSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_run.gif", true);
         private void SetCrouchingSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_crouch.gif", true);
         private void SetIdleSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_start.png", false);

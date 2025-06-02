@@ -54,9 +54,7 @@ namespace ChromeDinoGame.Services
 
         private void CheckCollision(Obstacle obstacle)
         {
-            _dino.SetCollisionBox();
-            obstacle.SetCollisionBox();
-            if (obstacle.CheckCollision(_dino.CollisionBox, obstacle.CollisionBox))
+            if (obstacle.CheckCollision())
             {
                 _onCollisionCallback.Invoke();
             }

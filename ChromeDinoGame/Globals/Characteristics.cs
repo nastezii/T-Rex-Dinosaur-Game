@@ -8,5 +8,6 @@
         public const double JumpSpeed = 20;
         public const double Gravity = 1.1;
         public const double PlayerPosX = 50;
+        public const double ScoreToWin = 1000000;
     }
 }

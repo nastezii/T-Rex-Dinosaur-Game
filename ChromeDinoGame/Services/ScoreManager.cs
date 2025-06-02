@@ -1,4 +1,6 @@
-﻿namespace ChromeDinoGame.Services
+﻿using ChromeDinoGame.Globals;
+
+namespace ChromeDinoGame.Services
 {
     public class ScoreManager
     {
@@ -22,8 +24,8 @@
         {
             CurrentScore += speed;
 
-            if (CurrentScore >= 100000)
-                CurrentScore = 100000;
+            if (CurrentScore >= Characteristics.ScoreToWin)
+                CurrentScore = Characteristics.ScoreToWin;
 
              if (HighestScore <= CurrentScore)
                 HighestScore = CurrentScore;

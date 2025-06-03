@@ -35,27 +35,5 @@ namespace ChromeDinoGame.Entities
         }
 
         public void RemoveEntity() => GlobalCanvas.GameArea.Children.Remove(Sprite);
-
-        protected void SetSpriteCharacteristics(string path, bool isGif)
-        {
-            Sprite = new Image();
-
-            if (isGif)
-            {
-                var gifImage = new BitmapImage(new Uri(path));
-                ImageBehavior.SetAnimatedSource(Sprite, gifImage);
-
-                Width = gifImage.PixelWidth;
-                Height = gifImage.PixelHeight;
-            }
-            else
-            {
-                var bitmapImage = new BitmapImage(new Uri(path));
-                Sprite.Source = bitmapImage;
-
-                Width = bitmapImage.Width;
-                Height = bitmapImage.Height;
-            }
-        }
     }
 }

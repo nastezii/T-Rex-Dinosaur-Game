@@ -1,4 +1,5 @@
 ﻿using ChromeDinoGame.Globals;
+using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
@@ -11,8 +12,10 @@ namespace ChromeDinoGame.Entities
             _speed = speed;
             _renderDepth = Characteristics.ObstacleRenderDepth;
 
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/cactus_{GlobalRandom.Instance.Next(1, 7)}.png", false);
+            (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics(GetRandomCactusPath(), false);
             RenderEntity();
         }
+
+        private string GetRandomCactusPath() => $"pack://application:,,,/Resources/cactus_{GlobalRandom.Instance.Next(1, 7)}.png";
     }
 }

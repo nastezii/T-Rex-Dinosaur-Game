@@ -1,4 +1,5 @@
 ﻿using ChromeDinoGame.Globals;
+using ChromeDinoGame.Services;
 
 namespace ChromeDinoGame.Entities
 {
@@ -11,7 +12,7 @@ namespace ChromeDinoGame.Entities
             _speed = speed;
             _renderDepth = Characteristics.RoadRenderDepth;
 
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/road.png", false);
+            (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics($"pack://application:,,,/Resources/road.png", false);
             RenderEntity();
         }
 

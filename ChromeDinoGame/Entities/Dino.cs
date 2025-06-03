@@ -1,5 +1,6 @@
-﻿using System.Windows.Controls;
-using ChromeDinoGame.Globals;
+﻿using ChromeDinoGame.Globals;
+using ChromeDinoGame.Services;
+using System.Windows.Controls;
 
 namespace ChromeDinoGame.Entities
 {
@@ -150,9 +151,9 @@ namespace ChromeDinoGame.Entities
             }
         }
 
-        private void SetRunningSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_run.gif", true);
-        private void SetCrouchingSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_crouch.gif", true);
-        private void SetIdleSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_start.png", false);
-        private void SetDeadSprite() => SetSpriteCharacteristics("pack://application:,,,/Resources/dino_dead.png", false);
+        private void SetRunningSprite() => (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics("pack://application:,,,/Resources/dino_run.gif", true);
+        private void SetCrouchingSprite() => (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics("pack://application:,,,/Resources/dino_crouch.gif", true);
+        private void SetIdleSprite() => (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics("pack://application:,,,/Resources/dino_start.png", false);
+        private void SetDeadSprite() => (Sprite, Width, Height) = SpriteMemoizer.SetSpriteCharacteristics("pack://application:,,,/Resources/dino_dead.png", false);
     }
 }

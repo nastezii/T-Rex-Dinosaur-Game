@@ -9,12 +9,12 @@ namespace ChromeDinoGame.Entities
             PosX = x; 
             PosY = y;
             _speed = speed;
+            _renderDepth = Characteristics.RoadRenderDepth;
 
             SetSpriteCharacteristics($"pack://application:,,,/Resources/road.png", false);
             RenderEntity();
         }
 
         public bool IsNearWindowEnd() => PosX < - Width + GlobalCanvas.GameArea.Width + 20;
-
     }
 }

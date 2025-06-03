@@ -9,6 +9,7 @@ namespace ChromeDinoGame.Entities
             PosX = GlobalCanvas.GameArea.Width;
             PosY = GlobalRandom.Instance.Next(180, 300);
             _speed = speed;
+            _renderDepth = Characteristics.CloudRenderDepth;
 
             SetSpriteCharacteristics($"pack://application:,,,/Resources/cloud.png", false);
             RenderEntity();

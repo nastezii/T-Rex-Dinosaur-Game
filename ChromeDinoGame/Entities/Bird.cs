@@ -9,6 +9,7 @@ namespace ChromeDinoGame.Entities
             PosY = GlobalRandom.Instance.Next(70, 100);
             PosX = GlobalCanvas.GameArea.Width - Width;
             _speed = speed;
+            _renderDepth = Characteristics.ObstacleRenderDepth;
 
             SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
             RenderEntity();

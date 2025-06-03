@@ -8,6 +8,7 @@ namespace ChromeDinoGame.Entities
     public abstract class Entity
     {
         protected double _speed;
+        protected int _renderDepth;
         public double Width { get; protected set; }
         public double Height { get; protected set; }
         public double PosX { get; protected set; }
@@ -29,16 +30,8 @@ namespace ChromeDinoGame.Entities
                 GlobalCanvas.GameArea.Children.Add(Sprite);
                 Canvas.SetLeft(Sprite, PosX);
                 Canvas.SetBottom(Sprite, PosY);
+                Canvas.SetZIndex(Sprite, _renderDepth);
             }
-
-            if (this is Dino)
-                Canvas.SetZIndex(Sprite, 4);
-            else if (this is Obstacle)
-                Canvas.SetZIndex(Sprite, 3);
-            else if (this is Road)
-                Canvas.SetZIndex(Sprite, 2);
-            else
-                Canvas.SetZIndex(Sprite, 1);
         }
 
         public void RemoveEntity() => GlobalCanvas.GameArea.Children.Remove(Sprite);

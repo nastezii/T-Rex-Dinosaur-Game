@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using ChromeDinoGame.Globals;
 
 namespace ChromeDinoGame.Entities
@@ -22,6 +21,7 @@ namespace ChromeDinoGame.Entities
             _speed = JumpSpeed;
             PosY = LineOfGround;
             PosX = Characteristics.PlayerPosX;
+            _renderDepth = Characteristics.DinoRenderDepth;
 
             SetIdleSprite();
         }

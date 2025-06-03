@@ -13,7 +13,7 @@ namespace ChromeDinoGame.Services
             FontSize = 16,
             Foreground = Brushes.DarkSlateGray,
             FontWeight = FontWeights.Bold,
-            Margin = new Thickness(380, 10, 0, 0)
+            Margin = new Thickness(730, 10, 0, 0)
         };
         private TextBlock _startInfBlock = new TextBlock
         {
@@ -22,7 +22,7 @@ namespace ChromeDinoGame.Services
             FontWeight = FontWeights.Bold,
             Foreground = Brushes.Gray,
             TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(150, 140, 0, 0)
+            Margin = new Thickness(310, 140, 0, 0)
         };
         private TextBlock _pauseBlock = new TextBlock
         {
@@ -30,7 +30,7 @@ namespace ChromeDinoGame.Services
             FontSize = 16,
             Foreground = Brushes.DarkSlateGray,
             FontWeight = FontWeights.Bold,
-            Margin = new Thickness(210, 10, 0, 0)
+            Margin = new Thickness(560, 10, 0, 0)
         };
         private TextBlock _replayInfBlock = new TextBlock
         {
@@ -39,7 +39,7 @@ namespace ChromeDinoGame.Services
             FontWeight = FontWeights.Bold,
             Foreground = Brushes.Gray,
             TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(240, 170, 0, 0)
+            Margin = new Thickness(400, 170, 0, 0)
         };
         private TextBlock _victoryBlock = new TextBlock
         {
@@ -48,7 +48,7 @@ namespace ChromeDinoGame.Services
             FontWeight = FontWeights.Bold,
             Foreground = Brushes.Gold,
             TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(50, 140, 0, 0)
+            Margin = new Thickness(225, 140, 0, 0)
         };
 
         public void UpdateScoreBlock(double score, double highestScore)

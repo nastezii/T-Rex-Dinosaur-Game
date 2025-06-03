@@ -60,7 +60,7 @@ namespace ChromeDinoGame.Services
 
         public void InitializeGame()
         {
-            _entityHandler.InitializeStartWindow();
+            _entityHandler.InitializeEntities();
             _scoreManager.SetScores();
             _uiManager.DisplayPauseInfBlock();
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
@@ -81,7 +81,7 @@ namespace ChromeDinoGame.Services
             _currentSpeedOfEntities = Characteristics.SpeedOfEntities;
             GlobalCanvas.GameArea.Children.Clear();
             _entityHandler.SetReplayCharacteristics();
-            _entityHandler.InitializeStartWindow();
+            _entityHandler.InitializeEntities();
             _scoreManager.SetScores();
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
             _uiManager.DisplayPauseInfBlock();

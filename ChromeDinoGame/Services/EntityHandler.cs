@@ -6,7 +6,6 @@ namespace ChromeDinoGame.Services
     class EntityHandler
     {
         private Dino _dino = Dino.Instance;
-
         private const double LineOfGround = Characteristics.LineOfGround;
         private const double InitialSpeed = Characteristics.SpeedOfEntities;
         private const double SpeedInc = Characteristics.SpeedInc;
@@ -14,42 +13,68 @@ namespace ChromeDinoGame.Services
 
         private Action _onCollisionCallback;
         private ObstacleSpawner _obstaclesSpawner = new ObstacleSpawner();
-        private List<Obstacle> _obstacles = new List<Obstacle>();
-        private List<Cloud> _clouds = new List<Cloud>();
-        private List<Road> _roads = new List<Road>();
+        private List<Entity> _entities = new List<Entity>();
 
         public EntityHandler(Action onCollisionCallback)
         {
-            _onCollisionCallback = onCollisionCallback;;
+            _onCollisionCallback = onCollisionCallback;
         }
 
-        public void InitializeStartWindow()
+        public void InitializeEntities()
         {
             _dino.RenderEntity();
-            _roads.Add(new Road(_currentSpeed, 0, LineOfGround / 1.5));
-            _roads[0].RenderEntity();
-            _roads.Add(new Road(_currentSpeed, GlobalCanvas.GameArea.Width, LineOfGround / 1.5));
-            _roads[1].RenderEntity();
-            _clouds.Add(new Cloud(_currentSpeed / 10));
-            _clouds[0].RenderEntity();
+            _entities.Add(new Road(_currentSpeed, 0, LineOfGround / 2));
+            _entities.Add(new Cloud(_currentSpeed / 10));
         }
 
         public void SetReplayCharacteristics()
         {
             _currentSpeed = InitialSpeed;
-            _roads.Clear();
-            _clouds.Clear();
-            _obstacles.Clear();
+            _entities.Clear();
         }
 
         public void UpdateEntities()
         {
             _currentSpeed += SpeedInc;
 
-            _dino.MoveEntity();  
-            UpdateObstacles();
-            UpdateClouds();
-            UpdateRoads();
+            RefreshEntities();
+        }
+
+        private void RefreshEntities() 
+        {
+            _dino.MoveEntity();
+
+            for (int i = _entities.Count - 1; i >= 0; i --)
+            { 
+                if (_entities[i].IsInWindow())
+                {
+                    _entities[i].MoveEntity();
+                }
+                else
+                {
+                    _entities[i].RemoveEntity();
+                    _entities.RemoveAt(i);
+                }
+
+                Road firstRoad = _entities.OfType<Road>().LastOrDefault();
+                Cloud lastCloud = _entities.OfType<Cloud>().LastOrDefault();
+                Obstacle lastObstacle = _entities.OfType<Obstacle>().LastOrDefault();
+
+                if (firstRoad.IsNearWindowEnd())
+                {
+                    _entities.Add(new Road(_currentSpeed, GlobalCanvas.GameArea.Width, LineOfGround));
+                }
+
+                if (lastCloud == null || lastCloud.PosX < GlobalRandom.Instance.Next(150, 300))
+                {
+                    _entities.Add(new Cloud(_currentSpeed / 10));
+                }
+
+                if (lastObstacle == null || lastObstacle.PosX < GlobalRandom.Instance.Next(30, 75))
+                {
+                    _entities.Add(_obstaclesSpawner.GenerateObstacle(LineOfGround, _currentSpeed));
+                }
+            }
         }
 
         private void CheckCollision(Obstacle obstacle)
@@ -57,69 +82,6 @@ namespace ChromeDinoGame.Services
             if (obstacle.CheckCollision())
             {
                 _onCollisionCallback.Invoke();
-            }
-        }
-
-        private void UpdateObstacles()
-        {
-            for (int i = _obstacles.Count - 1; i >= 0; i--)
-            {
-                if (_obstacles[i].IsInWindow())
-                {
-                    _obstacles[i].MoveEntity();
-                    CheckCollision(_obstacles[i]);
-                }
-                else
-                {
-                    _obstacles[i].RemoveEntity();
-                    _obstacles.RemoveAt(i);
-                }
-            }
-
-            if (_obstacles.Count == 0 || _obstacles[_obstacles.Count - 1].PosX < GlobalRandom.Instance.Next(30, 75))
-            {
-                _obstacles.Add(_obstaclesSpawner.GenerateObstacle(LineOfGround, _currentSpeed));
-                _obstacles[_obstacles.Count - 1].RenderEntity();
-            }
-        }
-
-        private void UpdateClouds()
-        {
-            for (int i = _clouds.Count - 1; i >= 0; i--)
-            {
-                if (_clouds[i].IsInWindow())
-                {
-                    _clouds[i].MoveEntity();
-                }
-                else
-                {
-                    _clouds[i].RemoveEntity();
-                    _clouds.RemoveAt(i);
-                }
-            }
-
-            if (_clouds[_clouds.Count - 1].PosX < GlobalRandom.Instance.Next(150, 300))
-            {
-                _clouds.Add(new Cloud(_currentSpeed / 10));
-                _clouds[_clouds.Count - 1].RenderEntity();
-            }
-        }
-
-        private void UpdateRoads()
-        {
-            for (int i = _roads.Count - 1; i >= 0; i--)
-            {
-                if (_roads[i].IsInWindow())
-                {
-                    _roads[i].MoveEntity();
-                }
-                else
-                {
-                    _roads[i].RemoveEntity();
-                    _roads.RemoveAt(i);
-                    _roads.Add(new Road(_currentSpeed, GlobalCanvas.GameArea.Width, LineOfGround / 1.5));
-                    _roads[_roads.Count - 1].RenderEntity();
-                }
             }
         }
     }

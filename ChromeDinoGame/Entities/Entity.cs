@@ -14,7 +14,7 @@ namespace ChromeDinoGame.Entities
         public double PosY { get; protected set; }
         public Image Sprite { get; protected set; }
 
-        public virtual bool IsInWindow() => PosX > - Width;
+        public bool IsInWindow() => PosX > - Width;
 
         public virtual void MoveEntity()
         {

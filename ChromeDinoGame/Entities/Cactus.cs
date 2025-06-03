@@ -11,6 +11,7 @@ namespace ChromeDinoGame.Entities
             _speed = speed;
 
             SetSpriteCharacteristics($"pack://application:,,,/Resources/cactus_{GlobalRandom.Instance.Next(1, 7)}.png", false);
+            RenderEntity();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace ChromeDinoGame.Entities
             _speed = speed;
 
             SetSpriteCharacteristics("pack://application:,,,/Resources/bird_fly.gif", true);
+            RenderEntity();
         }
     }
 }

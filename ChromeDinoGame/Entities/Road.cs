@@ -10,9 +10,11 @@ namespace ChromeDinoGame.Entities
             PosY = y;
             _speed = speed;
 
-            SetSpriteCharacteristics($"pack://application:,,,/Resources/road_{GlobalRandom.Instance.Next(1, 4)}.png", false);
+            SetSpriteCharacteristics($"pack://application:,,,/Resources/road.png", false);
+            RenderEntity();
         }
 
-        public override bool IsInWindow() => PosX > - Width + 25;
+        public bool IsNearWindowEnd() => PosX < - Width + GlobalCanvas.GameArea.Width + 20;
+
     }
 }

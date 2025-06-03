@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Diagnostics;
+using System.Windows.Media;
 using ChromeDinoGame.Entities;
 using ChromeDinoGame.Globals;
 
@@ -6,35 +7,59 @@ namespace ChromeDinoGame.Services
 {
     class GameManager
     {
-        private DispatcherTimer _gameTimer;
         private Action _endGameCallback;
         private EntityHandler _entityHandler;
         private ScoreManager _scoreManager;
         private UIManager _uiManager;
+        private Stopwatch _stopwatch;
+        private TimeSpan _lastFrameTime;
 
         private double _currentSpeedOfEntities = Characteristics.SpeedOfEntities;
         private const double SpeedInc = Characteristics.SpeedInc;
 
-        public GameManager(Action endGameCallBack)
+        private const double TargetFPS = 60;
+        private const double FrameTimeCap = 1.0 / TargetFPS;
+
+        public GameManager(Action endGameCallback)
         {
-            _endGameCallback = endGameCallBack;
+            _endGameCallback = endGameCallback;
             _entityHandler = new EntityHandler(EndGame);
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager();
-            _gameTimer = new DispatcherTimer();
-            _gameTimer.Interval = TimeSpan.FromMilliseconds(1000/60);
-            _gameTimer.Tick += GameLoop;
+            _stopwatch = new Stopwatch();
+        }
+
+        private void GameLoop(object sender, EventArgs e)
+        {
+            TimeSpan currentTime = _stopwatch.Elapsed;
+            double deltaTime = (currentTime - _lastFrameTime).TotalSeconds;
+
+            if (deltaTime < FrameTimeCap)
+                return;
+
+            _lastFrameTime = currentTime;
+
+            _currentSpeedOfEntities += SpeedInc * deltaTime;
+
+            _entityHandler.UpdateEntities();
+            _scoreManager.UpdateScores(_currentSpeedOfEntities);
+            _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
+
+            if (_scoreManager.CurrentScore >= Characteristics.ScoreToWin)
+                DeclareVictory();
         }
 
         public void StartGame()
         {
             Dino.Instance.Run();
             _uiManager.UpdateStartInfoBlock(false);
-            _gameTimer.Start();
+            _lastFrameTime = TimeSpan.Zero;
+            CompositionTarget.Rendering += GameLoop;
+            _stopwatch.Restart();
         }
 
         public void InitializeGame()
-        { 
+        {
             _entityHandler.InitializeStartWindow();
             _scoreManager.SetScores();
             _uiManager.DisplayPauseInfBlock();
@@ -46,7 +71,8 @@ namespace ChromeDinoGame.Services
         {
             Dino.Instance.SetWinState();
             _uiManager.DisplayVictoryBlock();
-            _gameTimer.Stop();
+            CompositionTarget.Rendering -= GameLoop;
+            _stopwatch.Stop();
             _endGameCallback.Invoke();
         }
 
@@ -60,7 +86,9 @@ namespace ChromeDinoGame.Services
             _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
             _uiManager.DisplayPauseInfBlock();
             Dino.Instance.ReviveDino();
-            _gameTimer.Start();
+            _lastFrameTime = TimeSpan.Zero;
+            CompositionTarget.Rendering += GameLoop;
+            _stopwatch.Restart();
         }
 
         public void TogglePause(bool isPaused)
@@ -68,28 +96,25 @@ namespace ChromeDinoGame.Services
             Dino.Instance.ToggleDinoPause(isPaused);
 
             if (isPaused)
-                _gameTimer.Stop();
+            {
+                CompositionTarget.Rendering -= GameLoop;
+                _stopwatch.Stop();
+            }
             else
-                _gameTimer.Start();
+            {
+                _lastFrameTime = TimeSpan.Zero;
+                CompositionTarget.Rendering += GameLoop;
+                _stopwatch.Start();
+            }
         }
 
         public void EndGame()
         {
-            _gameTimer.Stop();
+            CompositionTarget.Rendering -= GameLoop;
+            _stopwatch.Stop();
             Dino.Instance.SetDeadCharacteristics();
             _uiManager.UpdateReplayInfoBlock(true);
             _endGameCallback.Invoke();
-        }
-
-        private void GameLoop(object sender, EventArgs e)
-        {
-            _currentSpeedOfEntities += SpeedInc;
-            _entityHandler.UpdateEntities();
-            _scoreManager.UpdateScores(_currentSpeedOfEntities);
-            _uiManager.UpdateScoreBlock(_scoreManager.CurrentScore, _scoreManager.HighestScore);
-
-            if(_scoreManager.CurrentScore >= Characteristics.ScoreToWin)
-                DeclareVictory();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ChromeDinoGame.Services
     {
         private static List<Action> _collisionReactions = new();
         private static Dino _dino = Dino.Instance;
-        private static int hitboxReduction = 10;
+        private static int hitboxReduction = 20;
 
         public static void AddReaction(Action reaction) =>_collisionReactions.Add(reaction);
 

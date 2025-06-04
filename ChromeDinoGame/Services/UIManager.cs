@@ -22,7 +22,7 @@ namespace ChromeDinoGame.Services
             FontWeight = FontWeights.Bold,
             Foreground = Brushes.Gray,
             TextAlignment = TextAlignment.Center,
-            Margin = new Thickness(310, 140, 0, 0)
+            Margin = new Thickness(310, 150, 0, 0)
         };
         private TextBlock _pauseBlock = new TextBlock
         {

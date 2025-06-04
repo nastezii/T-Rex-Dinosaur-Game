@@ -17,10 +17,12 @@
     <None Remove="Resources\cactus_5.png" />
     <None Remove="Resources\cactus_6.png" />
     <None Remove="Resources\cloud.png" />
+    <None Remove="Resources\die_sound.wav" />
     <None Remove="Resources\dino_crouch.gif" />
     <None Remove="Resources\dino_dead.png" />
     <None Remove="Resources\dino_run.gif" />
     <None Remove="Resources\dino_start.png" />
+    <None Remove="Resources\jump_sound.wav" />
     <None Remove="Resources\road.png" />
   </ItemGroup>
 
@@ -56,6 +58,9 @@
     <Resource Include="Resources\cloud.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\die_sound.wav">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\dino_crouch.gif">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -66,6 +71,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\dino_start.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\jump_sound.wav">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\road.png">

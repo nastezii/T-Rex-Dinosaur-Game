@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
@@ -26,8 +27,11 @@ namespace ChromeDinoGame.Services
                 }
                 catch (Exception ex)
                 {
-                    throw new FileNotFoundException($"Failed to load sprite from path: \"{path}\"." +
-                        $" Please check that the path is correct and the file exists.", ex);
+                    MessageBox.Show(
+                        $"Failed to load sprite from path:\n\"{path}\"\n\nPlease check that the path is correct and the file exists.\n\nError: {ex.Message}",
+                        "Sprite Load Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                 }
             }
 

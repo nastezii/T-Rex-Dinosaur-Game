@@ -50,6 +50,7 @@ namespace ChromeDinoGame.Entities
                 RemoveEntity();
                 SetIdleSprite();
                 RenderEntity();
+                SoundManager.PlaySound(SoundManager.SoundType.Jump);
             }
         }
 

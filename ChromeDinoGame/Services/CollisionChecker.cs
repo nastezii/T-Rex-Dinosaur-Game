@@ -5,7 +5,11 @@ namespace ChromeDinoGame.Services
 {
     static class CollisionChecker
     {
-        private static List<Action> _collisionReactions = new();
+        private static List<Action> _collisionReactions = new()
+            {
+                () => Dino.Instance.SetDeadCharacteristics(),
+                () => SoundManager.PlaySound(SoundManager.SoundType.Death)
+            };
         private static Dino _dino = Dino.Instance;
         private static int hitboxReduction = 20;
 

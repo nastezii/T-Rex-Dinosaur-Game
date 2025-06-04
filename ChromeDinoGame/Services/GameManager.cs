@@ -110,7 +110,6 @@ namespace ChromeDinoGame.Services
         {
             CompositionTarget.Rendering -= GameLoop;
             _stopwatch.Stop();
-            Dino.Instance.SetDeadCharacteristics();
             _uiManager.UpdateReplayInfoBlock(true);
         }
     }

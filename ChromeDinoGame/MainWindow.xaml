@@ -6,9 +6,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChromeDinoGame"
         mc:Ignorable="d"
-        Height="400" Width="1000" Background ="Black">
+        Title="Chrome Dino Game"
+        Height="400" Width="1000"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        WindowStartupLocation="CenterScreen"
+        Background="Black">
 
     <Grid>
-        <Canvas Name="GameCanvas" Height="385" VerticalAlignment="Center" Width="1000" Background ="White"/>
+        <Canvas Name="GameCanvas"
+                Height="385"
+                Width="1000"
+                VerticalAlignment="Center"
+                Background="White"/>
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ namespace ChromeDinoGame.Entities
         public bool IsRunning { get; private set; } = false;
         public bool IsJumping { get; private set; } = false;
         public bool IsCrouching { get; private set; } = false;
+        public bool IsWinner { get; set; } = false;
         public bool IsActive { get; set; } = true;
         public bool IsAlive { get; set; } = true;
 
@@ -118,6 +119,7 @@ namespace ChromeDinoGame.Entities
 
         public void SetWinState()
         {
+            IsWinner = true;
             IsActive = false;
             ToggleDinoPause(true);
         }

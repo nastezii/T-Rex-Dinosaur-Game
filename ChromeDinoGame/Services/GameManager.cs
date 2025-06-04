@@ -7,7 +7,6 @@ namespace ChromeDinoGame.Services
 {
     class GameManager
     {
-        private Action _endGameCallback;
         private EntityHandler _entityHandler;
         private ScoreManager _scoreManager;
         private UIManager _uiManager;
@@ -20,13 +19,13 @@ namespace ChromeDinoGame.Services
         private const int TargetFPS = 60;
         private const double FrameTimeCap = 1.0 / TargetFPS;
 
-        public GameManager(Action endGameCallback)
+        public GameManager()
         {
-            _endGameCallback = endGameCallback;
             _entityHandler = new EntityHandler(EndGame);
             _scoreManager = new ScoreManager();
             _uiManager = new UIManager();
             _stopwatch = new Stopwatch();
+            CollisionChecker.AddReaction(EndGame);
         }
 
         private void GameLoop(object sender, EventArgs e)
@@ -73,7 +72,6 @@ namespace ChromeDinoGame.Services
             _uiManager.DisplayVictoryBlock();
             CompositionTarget.Rendering -= GameLoop;
             _stopwatch.Stop();
-            _endGameCallback.Invoke();
         }
 
         public void RestartGame()
@@ -114,7 +112,6 @@ namespace ChromeDinoGame.Services
             _stopwatch.Stop();
             Dino.Instance.SetDeadCharacteristics();
             _uiManager.UpdateReplayInfoBlock(true);
-            _endGameCallback.Invoke();
         }
     }
 }

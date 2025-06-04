@@ -49,6 +49,11 @@ namespace ChromeDinoGame.Services
                 if (_entities[i].IsInWindow())
                 {
                     _entities[i].MoveEntity();
+
+                    if (_entities[i] is Obstacle obstacle)
+                    {
+                        obstacle.CheckCollision();
+                    }
                 }
                 else
                 {
@@ -74,14 +79,6 @@ namespace ChromeDinoGame.Services
                 {
                     _entities.Add(_obstaclesSpawner.GenerateObstacle(LineOfGround, _currentSpeed));
                 }
-            }
-        }
-
-        private void CheckCollision(Obstacle obstacle)
-        {
-            if (obstacle.CheckCollision())
-            {
-                _onCollisionCallback.Invoke();
             }
         }
     }

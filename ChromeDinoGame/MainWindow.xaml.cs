@@ -23,13 +23,17 @@ namespace ChromeDinoGame
             Focusable = true;
             Focus();
 
-            _gameManager = new GameManager(EndGame);
+            _gameManager = new GameManager();
             GlobalCanvas.Initialize(GameCanvas);
             _gameManager.InitializeGame();
+            CollisionChecker.AddReaction(EndGame);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
+            if (Dino.Instance.IsWinner)
+                return;
+
             if (e.Key == Key.Enter)
                 HandleEnterKey();
             else if (e.Key == Key.Up)

@@ -62,15 +62,15 @@ namespace ChromeDinoGame.Services
 
                 if (firstRoad.IsNearWindowEnd())
                 {
-                    _entities.Add(new Road(_currentSpeed, GlobalCanvas.GameArea.Width, LineOfGround));
+                    _entities.Add(new Road(_currentSpeed, GlobalCanvas.GameArea.Width, LineOfGround / 2));
                 }
 
-                if (lastCloud == null || lastCloud.PosX < GlobalRandom.Instance.Next(150, 300))
+                if (lastCloud == null || lastCloud.PosX < GlobalRandom.Instance.Next(300, 600))
                 {
                     _entities.Add(new Cloud(_currentSpeed / 10));
                 }
 
-                if (lastObstacle == null || lastObstacle.PosX < GlobalRandom.Instance.Next(30, 75))
+                if (lastObstacle == null || lastObstacle.PosX < GlobalRandom.Instance.Next(0, 500))
                 {
                     _entities.Add(_obstaclesSpawner.GenerateObstacle(LineOfGround, _currentSpeed));
                 }

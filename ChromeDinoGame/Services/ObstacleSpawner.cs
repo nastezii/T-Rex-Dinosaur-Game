@@ -5,12 +5,13 @@ namespace ChromeDinoGame.Services
 {
     class ObstacleSpawner
     {
+        private const int BirdChance = 3;
+
         public Obstacle GenerateObstacle(double lineOfGround, double speed)
         {
-            if (GlobalRandom.Instance.Next(0, 4) == 0)
-                return new Bird(speed);
-            else
-                return new Cactus(speed);
+            bool shouldSpawnBird = GlobalRandom.Instance.Next(BirdChance) == 0;
+            return shouldSpawnBird ? new Bird(speed) : new Cactus(speed);
         }
     }
 }
+

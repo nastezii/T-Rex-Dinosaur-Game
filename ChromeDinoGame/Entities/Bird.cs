@@ -7,7 +7,7 @@ namespace ChromeDinoGame.Entities
     {
         public Bird(double speed) 
         {
-            PosY = GlobalRandom.Instance.Next(70, 100);
+            PosY = GlobalRandom.Instance.Next(50, 100);
             PosX = GlobalCanvas.GameArea.Width - Width;
             _speed = speed;
             _renderDepth = Characteristics.ObstacleRenderDepth;

@@ -2,11 +2,11 @@
 {
     public static class Characteristics
     {
-        public const int SpeedOfEntities = 12;
+        public const int SpeedOfEntities = 15;
         public const double SpeedInc = 0.0001;
         public const int LineOfGround = 20;
-        public const int JumpSpeed = 20;
-        public const double Gravity = 1.1;
+        public const int JumpSpeed = 30;
+        public const double Gravity = 2.5;
         public const int PlayerPosX = 50;
         public const int ScoreToWin = 1000000;
         public const int DinoRenderDepth = 10;

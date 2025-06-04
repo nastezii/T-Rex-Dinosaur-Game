@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 
@@ -12,14 +13,22 @@ namespace ChromeDinoGame.Services
         {
             if (!_bitmapCache.TryGetValue((path, isGif), out var bitmap))
             {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                bitmap.Freeze(); 
+                try
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
 
-                _bitmapCache[(path, isGif)] = bitmap;
+                    _bitmapCache[(path, isGif)] = bitmap;
+                }
+                catch (Exception ex)
+                {
+                    throw new FileNotFoundException($"Failed to load sprite from path: \"{path}\"." +
+                        $" Please check that the path is correct and the file exists.", ex);
+                }
             }
 
             var sprite = new Image();

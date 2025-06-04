@@ -17,7 +17,7 @@ namespace ChromeDinoGame.Services
         private double _currentSpeedOfEntities = Characteristics.SpeedOfEntities;
         private const double SpeedInc = Characteristics.SpeedInc;
 
-        private const double TargetFPS = 60;
+        private const int TargetFPS = 60;
         private const double FrameTimeCap = 1.0 / TargetFPS;
 
         public GameManager(Action endGameCallback)

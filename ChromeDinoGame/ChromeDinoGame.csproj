@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Resources\bird_fly.gif" />
+    <None Remove="Resources\bird_picture.png" />
     <None Remove="Resources\cactus_1.png" />
     <None Remove="Resources\cactus_2.png" />
     <None Remove="Resources\cactus_3.png" />
